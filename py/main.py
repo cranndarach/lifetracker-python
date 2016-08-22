@@ -20,7 +20,8 @@ class App:
         s = ttk.Style()
         s.configure('TButton', width=25)
 
-        self.menu_frame = Frame(self.master)
+        self.menu_frame = tk.Frame(self.master)
+        self.menu_frame.grid(row=0)
         self.file_button = tk.Menubutton(self.menu_frame, text="File", underline=0)
         self.file_button.pack(side='left')  #grid(row=0, column=0)
         self.file_button.menu = tk.Menu(self.file_button, tearoff=0)
