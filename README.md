@@ -1,5 +1,5 @@
 # LifeTracker
-### Keep track of events in your life and see how things relate to one another
+### Keep track of events and trends in your life
 
 ## Usage
 
@@ -8,7 +8,7 @@ Currently, there is no standalone application. To run, you will need Python 3 (i
 Keeping the directory structure as is, run the file `main.py` to run the application. **You may need to edit the shebang lines**, depending on your OS.  
 The python files currently have the shebang line:
 
-> #! python
+> \#! python
 
 ### Windows
 This will work iff one of the following conditions is met:
@@ -18,18 +18,18 @@ This will work iff one of the following conditions is met:
 
 Otherwise, you will need to either edit the shebang line to say:
 
->  #! python3
+>  \#! python3
 
 or explicitly run the file using Python 3 (e.g., by calling it from iPython 3)
 
 ### \*NIX
 You will need to edit this line to point to Python 3 on your system. This will probably be something like:
 
-> #!/usr/bin/python3
+> \#!/usr/bin/python3
 
 or
 
-> #!/usr/bin/env python3
+> \#!/usr/bin/env python3
 
 ### General usage notes
 
