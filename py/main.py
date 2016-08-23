@@ -93,6 +93,8 @@ class App:
         task.add_scale('Spoons at start:', 'start_spoons')
         task.add_scale('Mood at end:', 'end_mood')
         task.add_scale('Spoons at end:', 'end_spoons')
+        task.add_scale('Size of task:', 'size')
+        task.add_scale('Difficulty of task:', 'difficulty')
         task.add_scale('Progress/completion:', 'progress')
         task.add_scale('Satisfaction/Quality:', 'quality')
         task.add_numeric('Exp gained:', 'exp_gained')

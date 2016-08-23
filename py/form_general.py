@@ -108,7 +108,7 @@ class Form:
         self.count()
 
     def populate(self):
-        ttk.Label(self.master, text='Notes:').grid(row=self.row)
+        ttk.Label(self.master, text='Notes:').grid(row=self.row, column=self.col)
         self.notes.grid(row=self.row, column=self.col+1)
         self.count()
         ttk.Label(self.master, text='Tags (separated by commas):').grid(row=self.row, column=self.col)
@@ -140,9 +140,14 @@ class Form:
                 data[e] = tags
             else:
                 data[e] = self.__getattribute__(e).get()
-        with open('../data/data-'+uuid+'.json', 'w') as df:
-            dump(data, df)
-        messagebox.showinfo('Success', 'Your entry has been saved.')
+        while True:
+            try:
+                with open('../data/data-'+uuid+'.json', 'w') as df:
+                    dump(data, df)
+                messagebox.showinfo('Success', 'Your entry has been saved.')
+                break
+            except FileNotFoundError:
+                os.mkdir('../data')
 
     def close_window(self):
         self.master.destroy()
