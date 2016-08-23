@@ -190,7 +190,7 @@ class App:
     def export(self):
         data = {}
         index = 0
-        datafiles = glob('data/data-*')
+        datafiles = glob('../data/data-*')
         for d in datafiles:
             with open(d, 'r') as dfile:
                 dfile_data = load(dfile)
