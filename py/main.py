@@ -14,6 +14,7 @@ from form_general import Form
 class App:
     def __init__(self, master):
         self.master = master
+        self.saveloc = '../data'
         self.rowmaster = 0
         self.row = 1    # allows menu to be at row 0
         self.colmaster = 0
@@ -32,7 +33,7 @@ class App:
         self.simple = ttk.Button(self.master, text="Add Simple Entry", command=self.new_simple)
         self.simple.grid(row=self.row, column=self.col)
         self.count()
-        self.influence = ttk.Button(self.master, text="Environmental Influence", command=self.new_influence)
+        self.influence = ttk.Button(self.master, text="Add External Influence", command=self.new_influence)
         self.influence.grid(row=self.row, column=self.col)
         self.count()
         self.event = ttk.Button(self.master, text="Add Event", command=self.new_event)
@@ -66,6 +67,11 @@ class App:
         self.mega.grid(row=self.row, column=self.col)
         self.count()
 
+        # eventually make it a menu option
+        self.prefs = ttk.Button(self.master, text="Edit Preferences", command=self.preferences)
+        self.prefs.grid(row=self.row+1, column=0)
+        # self.count()
+
     def count(self):
         self.rowmaster += 1
         self.row = int(self.rowmaster/3) + 1
@@ -83,7 +89,7 @@ class App:
         simple.populate()
     def new_influence(self):
         self.infl_window = tk.Toplevel()
-        self.infl_window.title("Add Environmental Influence")
+        self.infl_window.title("Add External Influence")
         infl = Form(self.infl_window)
         infl.add_entry('Title:', 'title')
         infl.add_entry('Category:', 'category')
@@ -254,6 +260,7 @@ class App:
         mega.add_scale('Satisfaction/Quality/ Benefit:', 'quality')
         mega.add_numeric('Exp gained:', 'exp_gained')
         mega.populate()
+
     def export(self):
         data = {}
         index = 0
@@ -267,10 +274,35 @@ class App:
         datajson = dumps(data)
         datapd = pd.read_json(datajson, orient='index')
         outfile = filedialog.asksaveasfilename(initialdir = '/', title = 'Save as...',
-            filetypes = (('csv files', '*.csv'), ('all files', '*.*')))
+            defaultextension='.csv', filetypes = (('csv files', '*.csv'), ('all files', '*.*')))
         datapd.to_csv(outfile, index=False)
 
+    def browse_directory(self):
+        directory = filedialog.askdirectory(initialdir='/', title='Select folder...')
+        return(directory)
 
+    def preferences(self):
+        self.preferences_window = tk.Toplevel()
+        self.preferences_window.title('Preferences')
+        prefs = tk.Frame(self.preferences_window)
+        enter = tk.Frame(prefs)
+        ttk.Label(prefs, text='Save data files to:').grid(row=0, column=0)
+        self.data_dir = tk.StringVar()
+        self.data_dir.set(self.saveloc)
+        self.enter_data_dir = ttk.Entry(enter, textvariable=self.data_dir)
+        self.enter_data_dir.pack(side='left')
+        browse = ttk.Button(enter, text='Browse...', command=self.set_data_dir)
+        browse.pack(side='left')
+        enter.grid(row=0, column=1)
+        ttk.Button(prefs, text='Apply', command=self.save_prefs).grid(row=1, column=1)
+        prefs.pack()
+
+    def set_data_dir(self):
+        usrdir = self.browse_directory()
+        self.data_dir.set(usrdir)
+
+    def save_prefs(self):
+        self.saveloc = self.enter_data_dir.get()
 
 if __name__ == "__main__":
     root = tk.Tk()

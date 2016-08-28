@@ -143,7 +143,8 @@ class Form:
                 data[e] = self.__getattribute__(e).get()
         while True:
             try:
-                with open('../data/data-'+uuid+'.json', 'w') as df:
+                with open(self.master.saveloc+'/data-'+uuid+'.json', 'w') as df:
+                # with open('../data/data-'+uuid+'.json', 'w') as df:
                     dump(data, df)
                 messagebox.showinfo('Success', 'Your entry has been saved.')
                 break
