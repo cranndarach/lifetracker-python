@@ -29,6 +29,12 @@ class App:
         self.file_button['menu'] = self.file_button.menu
         self.file_button.menu.add_cascade(label="Export data to CSV", command=self.export)
 
+        self.simple = ttk.Button(self.master, text="Add Simple Entry", command=self.new_simple)
+        self.simple.grid(row=self.row, column=self.col)
+        self.count()
+        self.influence = ttk.Button(self.master, text="Environmental Influence", command=self.new_influence)
+        self.influence.grid(row=self.row, column=self.col)
+        self.count()
         self.event = ttk.Button(self.master, text="Add Event", command=self.new_event)
         self.event.grid(row=self.row, column=self.col)
         self.count()
@@ -66,6 +72,26 @@ class App:
         self.colmaster += 1
         self.col = self.colmaster%3
 
+    def new_simple(self):
+        self.simple_window = tk.Toplevel()
+        self.simple_window.title("Add Simple Entry")
+        simple = Form(self.simple_window)
+        simple.add_entry('Title:', 'title')
+        simple.add_entry('Category:', 'category')
+        simple.add_date_time('When:', 'when')
+        simple.add_entry('Location:', 'location')
+        simple.populate()
+    def new_influence(self):
+        self.infl_window = tk.Toplevel()
+        self.infl_window.title("Add Environmental Influence")
+        infl = Form(self.infl_window)
+        infl.add_entry('Title:', 'title')
+        infl.add_entry('Category:', 'category')
+        infl.add_date_time('When:', 'when')
+        infl.add_scale('Intensity:', 'intensity')
+        # infl.add_date_time('End:', 'end')
+        infl.add_entry('Location:', 'location')
+        infl.populate()
     def new_event(self):
         self.event_window = tk.Toplevel()
         self.event_window.title("New Event")
