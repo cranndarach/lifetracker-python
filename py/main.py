@@ -65,6 +65,7 @@ class App:
 
     def new_event(self):
         self.event_window = tk.Toplevel()
+        self.event_window.title("New Event")
         event = Form(self.event_window)
         event.add_entry('Title:', 'title')
         event.add_entry('Category:', 'category')
@@ -78,12 +79,14 @@ class App:
         event.populate()
     def update_spoons(self):
         self.spoons_window = tk.Toplevel()
+        self.spoons_window.title("Update Spoons")
         spoons = Form(self.spoons_window)
         spoons.add_scale('Spoons:', 'spoons')
         spoons.add_date_time('When:', 'when')
         spoons.populate()
     def new_task(self):
         self.task_window = tk.Toplevel()
+        self.task_window.title("New Task")
         task = Form(self.task_window)
         task.add_entry('Title:', 'title')
         task.add_entry('Category:', 'category')
@@ -102,6 +105,7 @@ class App:
         task.populate()
     def new_sleep(self):
         self.sleep_window = tk.Toplevel()
+        self.sleep_window.title("New Sleep Entry")
         sleep = Form(self.sleep_window)
         sleep.add_date_time('Went to bed:', 'sleep_start')
         sleep.add_date_time('Woke up:', 'sleep_end')
@@ -112,6 +116,7 @@ class App:
         sleep.populate()
     def update_mood(self):
         self.mood_window = tk.Toplevel()
+        self.mood_window.title("Update Mood")
         mood = Form(self.mood_window)
         mood.add_scale('Valence (higher for better mood):', 'valence')
         mood.add_scale('Worry/anxiety:', 'anxiety')
@@ -125,6 +130,7 @@ class App:
         mood.populate()
     def new_copech(self):
         self.copech_window = tk.Toplevel()
+        self.copech_window.title("New Coping Mechanism")
         copech = Form(self.copech_window)
         copech.add_entry('Coping mechanism used:', 'coping_mech')
         copech.add_entry('Category:', 'category')
@@ -139,6 +145,7 @@ class App:
         copech.populate()
     def update_health(self):
         self.health_window = tk.Toplevel()
+        self.health_window.title("Update Health/Symptoms")
         health = Form(self.health_window)
         health.add_entry('Symptom:', 'symptom')
         health.add_entry('Category:', 'category')
@@ -151,6 +158,7 @@ class App:
         health.populate()
     def meds_taken(self):
         self.med_window = tk.Toplevel()
+        self.med_window.title("Record Medicine Taken")
         med = Form(self.med_window)
         med.add_entry('Medicine name:', 'med_name')
         med.add_entry('Category:', 'category')
@@ -162,6 +170,7 @@ class App:
         med.populate()
     def new_everything(self):
         self.mega_window = tk.Toplevel()
+        self.mega_window.title("New Custom Entry")
         mega = Form(self.mega_window)
         mega.add_entry('Title:', 'title')
         mega.add_entry('Category:', 'category')
@@ -208,5 +217,6 @@ class App:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.title("LifeTracker")
     app = App(root)
     root.mainloop()
