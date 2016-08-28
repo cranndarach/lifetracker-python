@@ -25,10 +25,15 @@ class App:
         self.menu_frame = tk.Frame(self.master)
         self.menu_frame.grid(row=0)
         self.file_button = tk.Menubutton(self.menu_frame, text="File", underline=0)
-        self.file_button.pack(side='left')  #grid(row=0, column=0)
+        self.file_button.pack(side='left', anchor='w')  #grid(row=0, column=0)
         self.file_button.menu = tk.Menu(self.file_button, tearoff=0)
         self.file_button['menu'] = self.file_button.menu
-        self.file_button.menu.add_cascade(label="Export data to CSV", command=self.export)
+        self.file_button.menu.add_cascade(label="Export data to CSV...", command=self.export)
+        self.edit_button = tk.Menubutton(self.menu_frame, text="Edit", underline=0)
+        self.edit_button.pack(side='left')
+        self.edit_button.menu = tk.Menu(self.edit_button, tearoff=0)
+        self.edit_button['menu'] = self.edit_button.menu
+        self.edit_button.menu.add_cascade(label="Preferences...", command=self.preferences)
 
         self.simple = ttk.Button(self.master, text="Add Simple Entry", command=self.new_simple)
         self.simple.grid(row=self.row, column=self.col)
@@ -68,8 +73,8 @@ class App:
         self.count()
 
         # eventually make it a menu option
-        self.prefs = ttk.Button(self.master, text="Edit Preferences", command=self.preferences)
-        self.prefs.grid(row=self.row+1, column=0)
+        # self.prefs = ttk.Button(self.master, text="Edit Preferences", command=self.preferences)
+        # self.prefs.grid(row=self.row+2, column=0)
         # self.count()
 
     def count(self):
@@ -303,6 +308,7 @@ class App:
 
     def save_prefs(self):
         self.saveloc = self.enter_data_dir.get()
+        messagebox.showinfo('Success', 'Your preferences have been saved.')
 
 if __name__ == "__main__":
     root = tk.Tk()
