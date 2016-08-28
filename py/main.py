@@ -81,7 +81,7 @@ class App:
     def new_simple(self):
         self.simple_window = tk.Toplevel()
         self.simple_window.title("Add Simple Entry")
-        simple = Form(self.simple_window)
+        simple = Form(self.simple_window, self.saveloc)
         simple.add_entry('Title:', 'title')
         simple.add_entry('Category:', 'category')
         simple.add_date_time('When:', 'when')
@@ -90,7 +90,7 @@ class App:
     def new_influence(self):
         self.infl_window = tk.Toplevel()
         self.infl_window.title("Add External Influence")
-        infl = Form(self.infl_window)
+        infl = Form(self.infl_window, self.saveloc)
         infl.add_entry('Title:', 'title')
         infl.add_entry('Category:', 'category')
         infl.add_date_time('When:', 'when')
@@ -101,7 +101,7 @@ class App:
     def new_event(self):
         self.event_window = tk.Toplevel()
         self.event_window.title("New Event")
-        event = Form(self.event_window)
+        event = Form(self.event_window, self.saveloc)
         event.add_entry('Title:', 'title')
         event.add_entry('Category:', 'category')
         event.add_date_time('Start:', 'start')
@@ -115,14 +115,14 @@ class App:
     def update_spoons(self):
         self.spoons_window = tk.Toplevel()
         self.spoons_window.title("Update Spoons")
-        spoons = Form(self.spoons_window)
+        spoons = Form(self.spoons_window, self.saveloc)
         spoons.add_scale('Spoons:', 'spoons')
         spoons.add_date_time('When:', 'when')
         spoons.populate()
     def new_task(self):
         self.task_window = tk.Toplevel()
         self.task_window.title("New Task")
-        task = Form(self.task_window)
+        task = Form(self.task_window, self.saveloc)
         task.add_entry('Title:', 'title')
         task.add_entry('Category:', 'category')
         task.add_date_time('Start:', 'start')
@@ -141,7 +141,7 @@ class App:
     def new_sleep(self):
         self.sleep_window = tk.Toplevel()
         self.sleep_window.title("New Sleep Entry")
-        sleep = Form(self.sleep_window)
+        sleep = Form(self.sleep_window, self.saveloc)
         sleep.add_date_time('Went to bed:', 'sleep_start')
         sleep.add_date_time('Woke up:', 'sleep_end')
         sleep.add_entry('Location:', 'location')
@@ -152,7 +152,7 @@ class App:
     def update_mood(self):
         self.mood_window = tk.Toplevel()
         self.mood_window.title("Update Mood")
-        mood = Form(self.mood_window)
+        mood = Form(self.mood_window, self.saveloc)
         mood.add_scale('Valence (higher for better mood):', 'valence')
         mood.add_scale('Worry/anxiety:', 'anxiety')
         mood.add_scale('Tension (emotional or physical):', 'tension')
@@ -166,7 +166,7 @@ class App:
     def new_copech(self):
         self.copech_window = tk.Toplevel()
         self.copech_window.title("New Coping Mechanism")
-        copech = Form(self.copech_window)
+        copech = Form(self.copech_window, self.saveloc)
         copech.add_entry('Coping mechanism used:', 'coping_mech')
         copech.add_entry('Category:', 'category')
         copech.add_entry('Reason (optional):', 'reason')
@@ -181,7 +181,7 @@ class App:
     def update_health(self):
         self.health_window = tk.Toplevel()
         self.health_window.title("Update Health/Symptoms")
-        health = Form(self.health_window)
+        health = Form(self.health_window, self.saveloc)
         health.add_entry('Trait/Symptom:', 'symptom')
         health.add_entry('Category:', 'category')
         health.add_date_time('When/start:', 'start')
@@ -194,7 +194,7 @@ class App:
     def meds_taken(self):
         self.med_window = tk.Toplevel()
         self.med_window.title("Record Medicine Taken")
-        med = Form(self.med_window)
+        med = Form(self.med_window, self.saveloc)
         med.add_entry('Medicine name:', 'med_name')
         med.add_entry('Category:', 'category')
         med.add_entry('Dosage:', 'dosage')
@@ -206,7 +206,7 @@ class App:
     def update_pain(self):
         self.pain_window = tk.Toplevel()
         self.pain_window.title("Update Pain Levels")
-        pain = Form(self.pain_window)
+        pain = Form(self.pain_window, self.saveloc)
         pain.add_scale('Left shoulder pain:', 'left_shoulder_pain')
         pain.add_scale('Left neck pain:', 'left_neck_pain')
         pain.add_scale('Left head/upper neck pain:', 'left_upper_neck_pain')
@@ -234,7 +234,7 @@ class App:
     def new_everything(self):
         self.mega_window = tk.Toplevel()
         self.mega_window.title("New Custom Entry")
-        mega = Form(self.mega_window)
+        mega = Form(self.mega_window, self.saveloc)
         mega.add_entry('Title:', 'title')
         mega.add_entry('Category:', 'category')
         mega.add_entry('Reason:', 'reason')

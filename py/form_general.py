@@ -9,8 +9,9 @@ from uuid import uuid4
 from json import dump
 
 class Form:
-    def __init__(self, master):
+    def __init__(self, master, saveloc):
         self.master = master
+        self.saveloc = saveloc
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
         self.notes = tk.Text(self.master, width=30, height=5)
@@ -143,7 +144,7 @@ class Form:
                 data[e] = self.__getattribute__(e).get()
         while True:
             try:
-                with open(self.master.saveloc+'/data-'+uuid+'.json', 'w') as df:
+                with open(self.saveloc+'/data-'+uuid+'.json', 'w') as df:
                 # with open('../data/data-'+uuid+'.json', 'w') as df:
                     dump(data, df)
                 messagebox.showinfo('Success', 'Your entry has been saved.')
