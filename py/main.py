@@ -194,7 +194,7 @@ class App:
     def update_mobility(self):
         self.mobility_window = tk.Toplevel()
         self.mobility_window.title("Update Mobility")
-        mobility = Form(self.mood_window, self.saveloc)
+        mobility = Form(self.mobility_window, self.saveloc)
         mobility.add_scale('Shakiness:', 'shakiness')
         mobility.add_scale('Dyspraxia (fine):', 'dyspraxia_fine')
         mobility.add_scale('Dyspraxia (gross):', 'dyspraxia_gross')
