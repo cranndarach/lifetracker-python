@@ -16,15 +16,11 @@ class App:
     def __init__(self, master):
         self.master = master
         self.saveloc = '../data'
-        # self.rowmaster = 0
-        # self.row = 1    # allows menu to be at row 0
-        # self.colmaster = 0
-        # self.col = 0
         s = ttk.Style()
         s.configure('TButton', width=25)
 
         self.nb = ttk.Notebook(self.master)
-        self.main = Page() #tk.Frame()
+        self.main = Page()
         self.influence = Page()
         self.status = Page()
 
@@ -41,43 +37,6 @@ class App:
         self.edit_button['menu'] = self.edit_button.menu
         self.edit_button.menu.add_cascade(label="Preferences...", command=self.preferences)
 
-        # self.simple = ttk.Button(self.main, text="Add Simple Entry", command=self.new_simple)
-        # self.simple.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.influence = ttk.Button(self.main, text="Add External Influence", command=self.new_influence)
-        # self.influence.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.event = ttk.Button(self.main, text="Add Event", command=self.new_event)
-        # self.event.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.spoons = ttk.Button(self.main, text="Update Spoon Level", command=self.update_spoons)
-        # self.spoons.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.mood = ttk.Button(self.main, text="Update Mood", command=self.update_mood)
-        # self.mood.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.task = ttk.Button(self.main, text="Add Task", command=self.new_task)
-        # self.task.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.sleep = ttk.Button(self.main, text="Add Sleep Entry", command=self.new_sleep)
-        # self.sleep.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.copech = ttk.Button(self.main, text="Add Coping Mechanism", command=self.new_copech)
-        # self.copech.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.health = ttk.Button(self.main, text="Update Health/Symptoms", command=self.update_health)
-        # self.health.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.meds = ttk.Button(self.main, text="Record Medicine Taken", command=self.meds_taken)
-        # self.meds.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.pain = ttk.Button(self.main, text="Update Pain Levels", command=self.update_pain)
-        # self.pain.grid(row=self.row, column=self.col)
-        # self.count()
-        # self.mega = ttk.Button(self.main, text="Add Generic", command=self.new_everything)
-        # self.mega.grid(row=self.row, column=self.col)
-        # self.count()
-
         self.main.new_button("Add Simple Entry", self.new_simple)
         self.influence.new_button("Add External Influence", self.new_influence)
         self.main.new_button("Add Event", self.new_event)
@@ -88,7 +47,7 @@ class App:
         self.influence.new_button("Add Coping Mechanism", self.new_copech)
         self.status.new_button("Update Health/Symptoms", self.update_health)
         self.influence.new_button("Record Medicine Taken", self.meds_taken)
-        self.status.new_button("Update Pain Leves", self.update_pain)
+        self.status.new_button("Update Pain Level", self.update_pain)
         self.main.new_button("Add Generic", self.new_everything)
 
         self.nb.add(self.main, text='Main')
@@ -96,16 +55,10 @@ class App:
         self.nb.add(self.influence, text='Influences')
         self.nb.grid(row=1, column=0)
 
-    # def count(self):
-    #     self.rowmaster += 1
-    #     self.row = int(self.rowmaster/3) + 1
-    #     self.colmaster += 1
-    #     self.col = self.colmaster%3
-
     def new_simple(self):
-        self.simple_window = tk.Frame() #tk.Toplevel()
+        self.simple_window = tk.Toplevel()  #tk.Frame()
         # self.simple_tab = self.nb.add(self.simple_window, text="Add Simple Entry")
-        self.nb.add(self.simple_window, text="Add Simple Entry")
+        # self.nb.add(self.simple_window, text="Add Simple Entry")
         simple = Form(self.simple_window, self.saveloc)
         simple.add_entry('Title:', 'title')
         simple.add_entry('Category:', 'category')
