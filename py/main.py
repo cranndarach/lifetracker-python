@@ -37,18 +37,22 @@ class App:
         self.edit_button['menu'] = self.edit_button.menu
         self.edit_button.menu.add_cascade(label="Preferences...", command=self.preferences)
 
-        self.main.new_button("Add Simple Entry", self.new_simple)
-        self.influence.new_button("Add External Influence", self.new_influence)
         self.main.new_button("Add Event", self.new_event)
+        self.main.new_button("Add Task", self.new_task)
+        self.main.new_button("Add Simple Entry", self.new_simple)
+        self.main.new_button("Add Generic", self.new_everything)
+
         self.status.new_button("Update Spoon Level", self.update_spoons)
         self.status.new_button("Update mood", self.update_mood)
-        self.main.new_button("Add Task", self.new_task)
+        self.status.new_button("Update Health/Symptoms", self.update_health)
+        self.status.new_button("Update Pain Level", self.update_pain)
+        self.status.new_button("Update Mobility", self.update_mobility)
+        self.status.new_button("Update Hunger", self.update_hunger)
+
+        self.influence.new_button("Add External Influence", self.new_influence)
         self.influence.new_button("Add Sleep Entry", self.new_sleep)
         self.influence.new_button("Add Coping Mechanism", self.new_copech)
-        self.status.new_button("Update Health/Symptoms", self.update_health)
         self.influence.new_button("Record Medicine Taken", self.meds_taken)
-        self.status.new_button("Update Pain Level", self.update_pain)
-        self.main.new_button("Add Generic", self.new_everything)
 
         self.nb.add(self.main, text='Main')
         self.nb.add(self.status, text='Status')
@@ -181,6 +185,21 @@ class App:
         med.add_date_time('End of dose (set to same as start if not applicable):', 'end')
         med.add_scale('Benefit/Improvement (leave at 0 if NA/unknown):', 'quality')
         med.populate()
+    def update_hunger(self):
+        self.hunger_window = tk.Toplevel()
+        self.hunger_window.title("Update Hunger")
+        hunger = Form(self.hunger_window, self.saveloc)
+        hunger.add_scale('Hunger:', 'hunger')
+        hunger.populate()
+    def update_mobility(self):
+        self.mobility_window = tk.Toplevel()
+        self.mobility_window.title("Update Mobility")
+        mobility = Form(self.mood_window, self.saveloc)
+        mobility.add_scale('Shakiness:', 'shakiness')
+        mobility.add_scale('Dyspraxia (fine):', 'dyspraxia_fine')
+        mobility.add_scale('Dyspraxia (gross):', 'dyspraxia_gross')
+        mobility.add_scale('Weakness:', 'weakness')
+        mobility.populate()
     def update_pain(self):
         self.pain_window = tk.Toplevel()
         self.pain_window.title("Update Pain Levels")
