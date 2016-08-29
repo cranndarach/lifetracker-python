@@ -10,82 +10,55 @@ from json import load, dumps
 import pandas as pd
 
 from form_general import Form
+from page import Page
 
 class App:
     def __init__(self, master):
         self.master = master
         self.saveloc = '../data'
-        self.rowmaster = 0
-        self.row = 1    # allows menu to be at row 0
-        self.colmaster = 0
-        self.col = 0
         s = ttk.Style()
         s.configure('TButton', width=25)
 
+        self.nb = ttk.Notebook(self.master)
+        self.main = Page()
+        self.influence = Page()
+        self.status = Page()
+
         self.menu_frame = tk.Frame(self.master)
         self.menu_frame.grid(row=0)
-        self.file_button = tk.Menubutton(self.menu_frame, text="File", underline=0)
-        self.file_button.pack(side='left', anchor='w')  #grid(row=0, column=0)
+        self.file_button = ttk.Menubutton(self.menu_frame, text="File", underline=0)
+        self.file_button.pack(side='left')  #grid(row=0, column=0)
         self.file_button.menu = tk.Menu(self.file_button, tearoff=0)
         self.file_button['menu'] = self.file_button.menu
         self.file_button.menu.add_cascade(label="Export data to CSV...", command=self.export)
-        self.edit_button = tk.Menubutton(self.menu_frame, text="Edit", underline=0)
+        self.edit_button = ttk.Menubutton(self.menu_frame, text="Edit", underline=0)
         self.edit_button.pack(side='left')
         self.edit_button.menu = tk.Menu(self.edit_button, tearoff=0)
         self.edit_button['menu'] = self.edit_button.menu
         self.edit_button.menu.add_cascade(label="Preferences...", command=self.preferences)
 
-        self.simple = ttk.Button(self.master, text="Add Simple Entry", command=self.new_simple)
-        self.simple.grid(row=self.row, column=self.col)
-        self.count()
-        self.influence = ttk.Button(self.master, text="Add External Influence", command=self.new_influence)
-        self.influence.grid(row=self.row, column=self.col)
-        self.count()
-        self.event = ttk.Button(self.master, text="Add Event", command=self.new_event)
-        self.event.grid(row=self.row, column=self.col)
-        self.count()
-        self.spoons = ttk.Button(self.master, text="Update Spoon Level", command=self.update_spoons)
-        self.spoons.grid(row=self.row, column=self.col)
-        self.count()
-        self.mood = ttk.Button(self.master, text="Update Mood", command=self.update_mood)
-        self.mood.grid(row=self.row, column=self.col)
-        self.count()
-        self.task = ttk.Button(self.master, text="Add Task", command=self.new_task)
-        self.task.grid(row=self.row, column=self.col)
-        self.count()
-        self.sleep = ttk.Button(self.master, text="Add Sleep Entry", command=self.new_sleep)
-        self.sleep.grid(row=self.row, column=self.col)
-        self.count()
-        self.copech = ttk.Button(self.master, text="Add Coping Mechanism", command=self.new_copech)
-        self.copech.grid(row=self.row, column=self.col)
-        self.count()
-        self.health = ttk.Button(self.master, text="Update Health/Symptoms", command=self.update_health)
-        self.health.grid(row=self.row, column=self.col)
-        self.count()
-        self.meds = ttk.Button(self.master, text="Record Medicine Taken", command=self.meds_taken)
-        self.meds.grid(row=self.row, column=self.col)
-        self.count()
-        self.pain = ttk.Button(self.master, text="Update Pain Levels", command=self.update_pain)
-        self.pain.grid(row=self.row, column=self.col)
-        self.count()
-        self.mega = ttk.Button(self.master, text="Add Generic", command=self.new_everything)
-        self.mega.grid(row=self.row, column=self.col)
-        self.count()
+        self.main.new_button("Add Simple Entry", self.new_simple)
+        self.influence.new_button("Add External Influence", self.new_influence)
+        self.main.new_button("Add Event", self.new_event)
+        self.status.new_button("Update Spoon Level", self.update_spoons)
+        self.status.new_button("Update mood", self.update_mood)
+        self.main.new_button("Add Task", self.new_task)
+        self.influence.new_button("Add Sleep Entry", self.new_sleep)
+        self.influence.new_button("Add Coping Mechanism", self.new_copech)
+        self.status.new_button("Update Health/Symptoms", self.update_health)
+        self.influence.new_button("Record Medicine Taken", self.meds_taken)
+        self.status.new_button("Update Pain Level", self.update_pain)
+        self.main.new_button("Add Generic", self.new_everything)
 
-        # eventually make it a menu option
-        # self.prefs = ttk.Button(self.master, text="Edit Preferences", command=self.preferences)
-        # self.prefs.grid(row=self.row+2, column=0)
-        # self.count()
-
-    def count(self):
-        self.rowmaster += 1
-        self.row = int(self.rowmaster/3) + 1
-        self.colmaster += 1
-        self.col = self.colmaster%3
+        self.nb.add(self.main, text='Main')
+        self.nb.add(self.status, text='Status')
+        self.nb.add(self.influence, text='Influences')
+        self.nb.grid(row=1, column=0)
 
     def new_simple(self):
-        self.simple_window = tk.Toplevel()
-        self.simple_window.title("Add Simple Entry")
+        self.simple_window = tk.Toplevel()  #tk.Frame()
+        # self.simple_tab = self.nb.add(self.simple_window, text="Add Simple Entry")
+        # self.nb.add(self.simple_window, text="Add Simple Entry")
         simple = Form(self.simple_window, self.saveloc)
         simple.add_entry('Title:', 'title')
         simple.add_entry('Category:', 'category')
