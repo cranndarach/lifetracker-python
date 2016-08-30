@@ -1,13 +1,14 @@
 #! python
 
-# import os
+import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 from glob import glob
-from json import load, dumps
 import pandas as pd
+# from json import load, dumps
+import json
 
 from form_general import Form
 from page import Page
@@ -27,8 +28,11 @@ class App:
             self.menu_frame: The tk.Frame where the menu is held
             self.file_button, self.edit_button: Buttons on the menu
         """
+        with open('usrsettings/settings.py', 'r') as s:
+            settings = json.load(s)
+
         self.master = master
-        self.saveloc = '../data'
+        self.saveloc = settings['saveloc']  # '../data'
         s = ttk.Style()
         s.configure('TButton', width=25)
 
@@ -373,7 +377,18 @@ class App:
 
     def save_prefs(self):
         """Save the preferences for the current session."""
+        settings = {}
         self.saveloc = self.enter_data_dir.get()
+        settings['saveloc'] = self.saveloc
+
+        s = json.dumps(settings)
+        while True:
+            try:
+                with open('usrsettings/settings.py', 'w') as f:
+                    f.write(s)
+                    break
+            except FileNotFoundError:
+                os.mkdir('usrsettings')
         messagebox.showinfo('Success', 'Your preferences have been saved.')
 
 if __name__ == "__main__":
