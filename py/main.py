@@ -42,12 +42,13 @@ class App:
         self.main.new_button("Add Simple Entry", self.new_simple)
         self.main.new_button("Add Generic", self.new_everything)
 
-        self.status.new_button("Update Spoon Level", self.update_spoons)
-        self.status.new_button("Update mood", self.update_mood)
-        self.status.new_button("Update Health/Symptoms", self.update_health)
-        self.status.new_button("Update Pain Level", self.update_pain)
-        self.status.new_button("Update Mobility", self.update_mobility)
-        self.status.new_button("Update Hunger", self.update_hunger)
+        self.status.new_button("Log Spoon Level", self.update_spoons)
+        self.status.new_button("Log Mood", self.update_mood)
+        self.status.new_button("Log Health/Symptoms", self.update_health)
+        self.status.new_button("Log Pain Level", self.update_pain)
+        self.status.new_button("Log Mobility", self.update_mobility)
+        self.status.new_button("Log Hunger", self.update_hunger)
+        self.status.new_button("Log Headache", self.add_headache)
 
         self.influence.new_button("Add External Influence", self.new_influence)
         self.influence.new_button("Add Sleep Entry", self.new_sleep)
@@ -96,7 +97,7 @@ class App:
         event.populate()
     def update_spoons(self):
         self.spoons_window = tk.Toplevel()
-        self.spoons_window.title("Update Spoons")
+        self.spoons_window.title("Log Spoons")
         spoons = Form(self.spoons_window, self.saveloc)
         spoons.add_scale('Spoons:', 'spoons')
         spoons.add_date_time('When:', 'when')
@@ -133,7 +134,7 @@ class App:
         sleep.populate()
     def update_mood(self):
         self.mood_window = tk.Toplevel()
-        self.mood_window.title("Update Mood")
+        self.mood_window.title("Log Mood")
         mood = Form(self.mood_window, self.saveloc)
         mood.add_scale('Valence (higher for better mood):', 'valence')
         mood.add_scale('Worry/anxiety:', 'anxiety')
@@ -162,7 +163,7 @@ class App:
         copech.populate()
     def update_health(self):
         self.health_window = tk.Toplevel()
-        self.health_window.title("Update Health/Symptoms")
+        self.health_window.title("Log Health/Symptoms")
         health = Form(self.health_window, self.saveloc)
         health.add_entry('Trait/Symptom:', 'symptom')
         health.add_entry('Category:', 'category')
@@ -175,7 +176,7 @@ class App:
         health.populate()
     def meds_taken(self):
         self.med_window = tk.Toplevel()
-        self.med_window.title("Record Medicine Taken")
+        self.med_window.title("Log Medicine Taken")
         med = Form(self.med_window, self.saveloc)
         med.add_entry('Medicine name:', 'med_name')
         med.add_entry('Category:', 'category')
@@ -187,13 +188,21 @@ class App:
         med.populate()
     def update_hunger(self):
         self.hunger_window = tk.Toplevel()
-        self.hunger_window.title("Update Hunger")
+        self.hunger_window.title("Log Hunger")
         hunger = Form(self.hunger_window, self.saveloc)
         hunger.add_scale('Hunger:', 'hunger')
         hunger.populate()
+    def add_headache(self):
+        self.headache_window = tk.Toplevel()
+        self.headache_window.title("Log headache")
+        headache = Form(self.headache_window)
+        headache.add_entry('Headache type:', 'headache_type')
+        headache.add_entry('Trigger (if known):', 'trigger')
+        headache.add_scale('Intensity:', 'headache_intensity')
+        headache.populate()
     def update_mobility(self):
         self.mobility_window = tk.Toplevel()
-        self.mobility_window.title("Update Mobility")
+        self.mobility_window.title("Log Mobility")
         mobility = Form(self.mobility_window, self.saveloc)
         mobility.add_scale('Shakiness:', 'shakiness')
         mobility.add_scale('Dyspraxia (fine):', 'dyspraxia_fine')
@@ -202,7 +211,7 @@ class App:
         mobility.populate()
     def update_pain(self):
         self.pain_window = tk.Toplevel()
-        self.pain_window.title("Update Pain Levels")
+        self.pain_window.title("Log Pain Levels")
         pain = Form(self.pain_window, self.saveloc)
         pain.add_scale('Left shoulder pain:', 'left_shoulder_pain')
         pain.add_scale('Left neck pain:', 'left_neck_pain')
