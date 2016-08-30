@@ -28,11 +28,26 @@ class App:
             self.menu_frame: The tk.Frame where the menu is held
             self.file_button, self.edit_button: Buttons on the menu
         """
-        with open('usrsettings/settings.py', 'r') as s:
-            settings = json.load(s)
+        while True:
+            try:
+                with open('usrsettings/settings.json', 'r') as s:
+                    settings = json.load(s)
+                self.saveloc = settings['saveloc']
+                break
+            except FileNotFoundError:
+                try:
+                    with open('usrsettings/settings.json', 'w+') as s:
+                        write_settings = {}
+                        write_settings['saveloc'] = '../data'
+                        ws = json.dumps(write_settings)
+                        s.write(ws)
+                        settings = json.load(s)
+                    self.saveloc = settings['saveloc']
+                    break
+                except FileNotFoundError:
+                    os.mkdir('usrsettings')
 
         self.master = master
-        self.saveloc = settings['saveloc']  # '../data'
         s = ttk.Style()
         s.configure('TButton', width=25)
 
@@ -384,7 +399,7 @@ class App:
         s = json.dumps(settings)
         while True:
             try:
-                with open('usrsettings/settings.py', 'w') as f:
+                with open('usrsettings/settings.json', 'w') as f:
                     f.write(s)
                     break
             except FileNotFoundError:
