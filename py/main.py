@@ -13,7 +13,20 @@ from form_general import Form
 from page import Page
 
 class App:
+    """The main LifeTracker application."""
     def __init__(self, master):
+        """Instantiates the application with the specified layout.
+
+        Attributes:
+            self.master: The root Tk instance
+            self.saveloc: The path to the directory where data files will be saved
+            self.nb: The ttk.Notebook widget for organizing pages of the app
+            self.main: The 'main' page of entry options
+            self.influence: The page of entries that generally influence one's state
+            self.status: The page of entries for updating one's state
+            self.menu_frame: The tk.Frame where the menu is held
+            self.file_button, self.edit_button: Buttons on the menu
+        """
         self.master = master
         self.saveloc = '../data'
         s = ttk.Style()
@@ -60,6 +73,7 @@ class App:
         self.nb.add(self.influence, text='Influences')
         self.nb.grid(row=1, column=0)
 
+    # Log a simple entry with few options.
     def new_simple(self):
         self.simple_window = tk.Toplevel()  #tk.Frame()
         # self.simple_tab = self.nb.add(self.simple_window, text="Add Simple Entry")
@@ -70,6 +84,9 @@ class App:
         simple.add_date_time('When:', 'when')
         simple.add_entry('Location:', 'location')
         simple.populate()
+
+    # Log an external influence, something that may impact
+    # your state or other variable of interest.
     def new_influence(self):
         self.infl_window = tk.Toplevel()
         self.infl_window.title("Add External Influence")
@@ -81,6 +98,9 @@ class App:
         # infl.add_date_time('End:', 'end')
         infl.add_entry('Location:', 'location')
         infl.populate()
+
+    # Log an event, typically something where
+    # you were not the "do-er."
     def new_event(self):
         self.event_window = tk.Toplevel()
         self.event_window.title("New Event")
@@ -95,6 +115,8 @@ class App:
         event.add_scale('Mood at end:', 'end_valence')
         event.add_scale('Spoons at end:', 'end_spoons')
         event.populate()
+
+    # Log your "spoon" levels.
     def update_spoons(self):
         self.spoons_window = tk.Toplevel()
         self.spoons_window.title("Log Spoons")
@@ -102,6 +124,8 @@ class App:
         spoons.add_scale('Spoons:', 'spoons')
         spoons.add_date_time('When:', 'when')
         spoons.populate()
+
+    # Log a task, typically where you are the "do-er."
     def new_task(self):
         self.task_window = tk.Toplevel()
         self.task_window.title("New Task")
@@ -121,6 +145,8 @@ class App:
         task.add_scale('Satisfaction/Quality:', 'quality')
         task.add_numeric('Exp gained:', 'exp_gained')
         task.populate()
+
+    # Log times and quality of sleep.
     def new_sleep(self):
         self.sleep_window = tk.Toplevel()
         self.sleep_window.title("New Sleep Entry")
@@ -132,6 +158,8 @@ class App:
         sleep.add_scale('Mood when you woke up:', 'end_valence')
         sleep.add_scale('Quality:', 'quality')
         sleep.populate()
+
+    # Log your mood on various dimensions.
     def update_mood(self):
         self.mood_window = tk.Toplevel()
         self.mood_window.title("Log Mood")
@@ -146,6 +174,8 @@ class App:
         mood.add_date_time('When:', 'when')
         mood.add_entry('Location:', 'location')
         mood.populate()
+
+    # Log a coping mechanism used.
     def new_copech(self):
         self.copech_window = tk.Toplevel()
         self.copech_window.title("New Coping Mechanism")
@@ -161,6 +191,8 @@ class App:
         copech.add_numeric('Exp gained:', 'exp_gained')
         copech.add_entry('Location:', 'location')
         copech.populate()
+
+    # Log symptoms or other health-related factors.
     def update_health(self):
         self.health_window = tk.Toplevel()
         self.health_window.title("Log Health/Symptoms")
@@ -174,6 +206,8 @@ class App:
         health.add_scale('Intensity of symptom:', 'symptom_intensity')
         health.add_scale('Spoons:', 'spoons')
         health.populate()
+
+    # Log medicine taken.
     def meds_taken(self):
         self.med_window = tk.Toplevel()
         self.med_window.title("Log Medicine Taken")
@@ -186,20 +220,26 @@ class App:
         med.add_date_time('End of dose (set to same as start if not applicable):', 'end')
         med.add_scale('Benefit/Improvement (leave at 0 if NA/unknown):', 'quality')
         med.populate()
+
+    # Log hunger level.
     def update_hunger(self):
         self.hunger_window = tk.Toplevel()
         self.hunger_window.title("Log Hunger")
         hunger = Form(self.hunger_window, self.saveloc)
         hunger.add_scale('Hunger:', 'hunger')
         hunger.populate()
+
+    # Log headache, including what kind and the intensity.
     def add_headache(self):
         self.headache_window = tk.Toplevel()
         self.headache_window.title("Log headache")
-        headache = Form(self.headache_window)
+        headache = Form(self.headache_window, self.saveloc)
         headache.add_entry('Headache type:', 'headache_type')
         headache.add_entry('Trigger (if known):', 'trigger')
         headache.add_scale('Intensity:', 'headache_intensity')
         headache.populate()
+
+    # Log status of various facets of mobility.
     def update_mobility(self):
         self.mobility_window = tk.Toplevel()
         self.mobility_window.title("Log Mobility")
@@ -209,6 +249,8 @@ class App:
         mobility.add_scale('Dyspraxia (gross):', 'dyspraxia_gross')
         mobility.add_scale('Weakness:', 'weakness')
         mobility.populate()
+
+    # Log intensity of various types of pain.
     def update_pain(self):
         self.pain_window = tk.Toplevel()
         self.pain_window.title("Log Pain Levels")
@@ -237,6 +279,8 @@ class App:
         pain.add_date_time('When:', 'when')
         pain.add_entry('Your location:', 'location')
         pain.populate()
+
+    # Log basically anything.
     def new_everything(self):
         self.mega_window = tk.Toplevel()
         self.mega_window.title("New Custom Entry")
@@ -268,9 +312,17 @@ class App:
         mega.populate()
 
     def export(self):
+        """Gather data files, combine into Pandas data frame, save to .csv file.
+
+        Retrieves all files starting with 'data-' from the data directory.
+        Reads each one and appends it to a dictionary.
+        Stringifies into a JSON object.
+        Reads JSON object into a pandas data frame.
+        Writes this data frame to a file of the user's choice, using tkinter.filedialog.asksaveas().
+        """
         data = {}
         index = 0
-        datafiles = glob('../data/data-*')
+        datafiles = glob('../data/data-*') # change to self.saveloc
         for d in datafiles:
             with open(d, 'r') as dfile:
                 dfile_data = load(dfile)
@@ -284,10 +336,21 @@ class App:
         datapd.to_csv(outfile, index=False)
 
     def browse_directory(self):
+        """Shorthand function for allowing user to select a directory.
+
+        Returns the user's choice.
+        """
         directory = filedialog.askdirectory(initialdir='/', title='Select folder...')
         return(directory)
 
     def preferences(self):
+        """Window with program behavior options for the user to determine.
+
+        Currently, this allows users to set an alternate location to save
+        data files for the current session.
+        This will be changed to perseverate across sessions, as well as having
+        more options, as the program evolves.
+        """
         self.preferences_window = tk.Toplevel()
         self.preferences_window.title('Preferences')
         prefs = tk.Frame(self.preferences_window)
@@ -304,10 +367,12 @@ class App:
         prefs.pack()
 
     def set_data_dir(self):
+        """Ask for user's preference on the directory where data files will be saved."""
         usrdir = self.browse_directory()
         self.data_dir.set(usrdir)
 
     def save_prefs(self):
+        """Save the preferences for the current session."""
         self.saveloc = self.enter_data_dir.get()
         messagebox.showinfo('Success', 'Your preferences have been saved.')
 

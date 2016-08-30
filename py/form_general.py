@@ -9,7 +9,22 @@ from uuid import uuid4
 from json import dump
 
 class Form:
+    """An individual entry handler for LifeTracker."""
     def __init__(self, master, saveloc):
+        """Attributes:
+            self.master: The window/tk.Frame where the form will be.
+            self.saveloc: The directory (passed as an argument) where data files
+                will be saved.
+            self.send, self.close: Buttons at the bottom of each form, set to save
+                the data or close the window, respectively.
+            self.notes: A tk.Text box placed at the bottom of each form (called
+                with self.populate()) for notes.
+            self.tags: A ttk.Entry placed at the bottom of each form (called with
+                self.populate()) for tags.
+            self.row, self.rowmaster, self.col, self.colmaster: Used by self.count()
+                to determine grid placement of widgets.
+            self.entries: A storage space for the names of all fields in the form.
+        """
         self.master = master
         self.saveloc = saveloc
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
@@ -25,21 +40,38 @@ class Form:
         s.configure('TLabel', wraplength=125)
 
     def count(self):
+        """Determine the placement of a widget in the grid.
+
+        Increment self.rowmaster and self.colmaster. When they reach a
+            row/column break, they will reset to 0."""
         self.rowmaster += 1
         self.row = self.rowmaster%13
         self.colmaster += 1
         self.col = int(self.colmaster/13) * 2  # this will work for the time being
 
     def add_entry(self, label, name):
+        """Add a ttk.Entry with a ttk.Label, place it appropriately in the grid,
+            and make note of the name for data storage.
+
+        Arguments:
+            label: The label that is visible to the user.
+            name: The name of the column/field in the data entry.
+        """
         ttk.Label(self.master, text=label).grid(row=self.row, column=self.col)
         e = ttk.Entry(self.master, width=40)
         e.grid(row=self.row, column=self.col+1)
-        self.__setattr__(name, e)
-        self.entries.append(name)
-        self.count()
+        self.__setattr__(name, e) # Save as class attribute with name as provided in "name" arg
+        self.entries.append(name) # Save name to list of elements
+        self.count() # Increment the grid counters
 
     def add_date_time(self, label, name):
-        # text variables:
+        """Add a series of tk.Spinboxes with a label; the Spinboxes
+        hold a date and time.
+
+        Default value of each spinbox is the datetime.datetime.now() value
+            for that property (e.g., the hour).
+        Uses 12-hour time format.
+        """
         month = tk.IntVar()
         month.set(datetime.now().month)
         day = tk.IntVar()
@@ -61,7 +93,7 @@ class Form:
         minute = tk.IntVar()
         minute.set(datetime.now().minute)
         # everything else:
-        dateframe = tk.Frame(self.master)
+        dateframe = tk.Frame(self.master) # A tk.Frame for squeezing the spinboxes together
         ttk.Label(self.master, text=label).grid(row=self.row, column=self.col)
         mm = tk.Spinbox(dateframe, from_=1, to=12, wrap=True, width=3, textvariable=month)
         mm.pack(side="left")
@@ -90,7 +122,7 @@ class Form:
         ap.pack(side="left")
         self.__setattr__(name+'_ampm', ap)
         self.entries.append(name+'_ampm')
-        dateframe.grid(row=self.row, column=self.col+1)
+        dateframe.grid(row=self.row, column=self.col+1) # Then place the frame on the grid
         self.count()
 
     def add_scale(self, label, name, min_=0, max_=100):
