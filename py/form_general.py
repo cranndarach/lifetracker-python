@@ -7,6 +7,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from uuid import uuid4
 from json import dump
+# from prompt import Prompt
 
 class Form:
     """An individual entry handler for LifeTracker."""
@@ -29,6 +30,7 @@ class Form:
         self.saveloc = saveloc
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
+        self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
         self.notes = tk.Text(self.master, width=30, height=5)
         self.tags = ttk.Entry(self.master, width=40)
         self.entries = []
@@ -148,8 +150,9 @@ class Form:
         ttk.Label(self.master, text='Tags (separated by commas):').grid(row=self.row, column=self.col)
         self.tags.grid(row=self.row, column=self.col+1)
         self.count()
-        self.send.grid(row=self.row, column=self.col+1)
         self.close.grid(row=self.row, column=self.col)
+        self.preset.grid(row=self.row, column=self.col+1)
+        self.send.grid(row=self.row, column=self.col+2)
         self.count()
         self.entries.extend(['notes', 'tags'])
         i = 0
@@ -183,6 +186,52 @@ class Form:
                 break
             except FileNotFoundError:
                 os.mkdir('../data')
+
+    def save_preset(self):
+        preset = {}
+        prompt = tk.Toplevel()
+        prompt.title('Enter preset name')
+        ttk.Label(prompt, text='Enter preset name:').grid(row=0)
+        response = ttk.Entry(prompt)
+        response.grid(row=1, column=0)
+        def prompt_submit(entry):
+            preset_name = entry.get()
+            data = preset[preset_name] = {}
+            for e in self.entries:
+                if e == 'notes':
+                    data[e] = self.__getattribute__(e).get('1.0', 'end')
+                elif e == 'tags':
+                    tags = self.__getattribute__(e).get()
+                    tags = tags.split(',')
+                    tags = [t.strip() for t in tags]
+                    data[e] = tags
+                else:
+                    data[e] = self.__getattribute__(e).get()
+            while True:
+                try:
+                    with open('usrsettings/presets.json', 'a+') as f:
+                        dump(preset, f)
+                    messagebox.showinfo('Success', 'Preset "{}" saved'.format(preset_name))
+                    break
+                except FileNotFoundError:
+                    os.mkdir('usrsettings')
+        button = ttk.Button(prompt, text='Save', command=prompt_submit(response))
+        button.grid(row=1, column=1)
+        # def get_response(master, title, message):
+        #     # master = tk.Toplevel()
+        #     prompt = Prompt(master, title, message) # 'Enter preset name', 'Enter preset name:')
+        #     prompt.button_text = 'Save'
+        #     return(prompt.response)
+        # resp = get_response(preset_prompt, 'Enter preset name', 'Enter preset name:')
+        # while True:
+        #     if prompt.response != '':
+        #         preset_name = prompt.response
+        #         break
+                # messagebox.showinfo('Success', 'Preset "{}" saved'.format(preset_name))
+                # preset[prompt.response] = {}
+        # preset_prompt.destroy()
+                # break
+
 
     def close_window(self):
         self.master.destroy()
