@@ -341,7 +341,7 @@ class App:
         """
         data = {}
         index = 0
-        datafiles = glob('../data/data-*') # change to self.saveloc
+        datafiles = glob(self.saveloc+'/data-*') # change to self.saveloc
         for d in datafiles:
             with open(d, 'r') as dfile:
                 dfile_data = load(dfile)

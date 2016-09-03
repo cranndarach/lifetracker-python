@@ -217,50 +217,6 @@ class Form:
             dump(presets, f)
         messagebox.showinfo('Success', 'Your preset has been saved.')
 
-        # prompt = tk.Toplevel()
-        # prompt.title('Enter preset name')
-        # ttk.Label(prompt, text='Enter preset name:').grid(row=0)
-        # response = ttk.Entry(prompt)
-        # response.grid(row=1, column=0)
-        # def prompt_submit(entry):
-        #     preset_name = entry.get()
-        #     data = preset[preset_name] = {}
-        #     for e in self.entries:
-        #         if e == 'notes':
-        #             data[e] = self.__getattribute__(e).get('1.0', 'end')
-        #         elif e == 'tags':
-        #             tags = self.__getattribute__(e).get()
-        #             tags = tags.split(',')
-        #             tags = [t.strip() for t in tags]
-        #             data[e] = tags
-        #         else:
-        #             data[e] = self.__getattribute__(e).get()
-        #     while True:
-        #         try:
-        #             with open('usrsettings/presets.json', 'a+') as f:
-        #                 dump(preset, f)
-        #             messagebox.showinfo('Success', 'Preset "{}" saved'.format(preset_name))
-        #             break
-        #         except FileNotFoundError:
-        #             os.mkdir('usrsettings')
-        # button = ttk.Button(prompt, text='Save', command=prompt_submit(response))
-        # button.grid(row=1, column=1)
-        # def get_response(master, title, message):
-        #     # master = tk.Toplevel()
-        #     prompt = Prompt(master, title, message) # 'Enter preset name', 'Enter preset name:')
-        #     prompt.button_text = 'Save'
-        #     return(prompt.response)
-        # resp = get_response(preset_prompt, 'Enter preset name', 'Enter preset name:')
-        # while True:
-        #     if prompt.response != '':
-        #         preset_name = prompt.response
-        #         break
-                # messagebox.showinfo('Success', 'Preset "{}" saved'.format(preset_name))
-                # preset[prompt.response] = {}
-        # preset_prompt.destroy()
-                # break
-
-
     def close_window(self):
         self.master.destroy()
 
