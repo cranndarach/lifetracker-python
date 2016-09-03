@@ -38,7 +38,7 @@ class App:
                 try:
                     with open('usrsettings/settings.json', 'w+') as s:
                         write_settings = {}
-                        write_settings['saveloc'] = '../data'
+                        write_settings['saveloc'] = 'data'
                         ws = json.dumps(write_settings)
                         s.write(ws)
                         settings = json.load(s)
