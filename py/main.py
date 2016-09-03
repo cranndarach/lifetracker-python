@@ -246,6 +246,7 @@ class App:
         self.hunger_window.title("Log Hunger")
         hunger = Form(self.hunger_window, self.saveloc)
         hunger.add_scale('Hunger:', 'hunger')
+        hunger.add_date_time('When:','when')
         hunger.populate()
 
     # Log headache, including what kind and the intensity.
@@ -256,6 +257,7 @@ class App:
         headache.add_entry('Headache type:', 'headache_type')
         headache.add_entry('Trigger (if known):', 'trigger')
         headache.add_scale('Intensity:', 'headache_intensity')
+        headache.add_date_time('When:','when')
         headache.populate()
 
     # Log status of various facets of mobility.
@@ -267,6 +269,7 @@ class App:
         mobility.add_scale('Dyspraxia (fine):', 'dyspraxia_fine')
         mobility.add_scale('Dyspraxia (gross):', 'dyspraxia_gross')
         mobility.add_scale('Weakness:', 'weakness')
+        mobilith.add_date_time('When:', 'when')
         mobility.populate()
 
     # Log intensity of various types of pain.
@@ -341,7 +344,7 @@ class App:
         """
         data = {}
         index = 0
-        datafiles = glob(self.saveloc+'/data-*') # change to self.saveloc
+        datafiles = glob(self.saveloc+'/data-*')
         for d in datafiles:
             with open(d, 'r') as dfile:
                 dfile_data = load(dfile)
