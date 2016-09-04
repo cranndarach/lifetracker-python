@@ -8,10 +8,11 @@ from tkinter import messagebox
 from uuid import uuid4
 from json import dump, load
 # from prompt import Prompt
+from __init__ import saveloc
 
 class Form:
     """An individual entry handler for LifeTracker."""
-    def __init__(self, master, saveloc):
+    def __init__(self, master): #, saveloc):
         """Attributes:
             self.master: The window/tk.Frame where the form will be.
             self.saveloc: The directory (passed as an argument) where data files
