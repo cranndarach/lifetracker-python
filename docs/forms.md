@@ -42,7 +42,7 @@ def update_topic(self):
 
 Okay, let's break that down:
 
-```
+```{Python}
 def update_topic(self):
 ```
 
@@ -52,20 +52,20 @@ This defines the method that makes the form. It makes it so that you can call
 The "`self`" part means that it executes the code with respect to its object,
     in this case, the notebook page.
 
-```
+```{Python}
 self.topic_window = tk.Toplevel()
 ```
 
 This tells it to make a separate window (called a Toplevel) called topic_window
     for the form to be housed in.
 
-```
+```{Python}
 self.topic_window.title("Log Topic")
 ```
 
 This gives the window a title. You can change "Log Topic" to whatever you want.
 
-```
+```{Python}
 topic = Form(self.topic_window)
 ```
 
@@ -83,7 +83,7 @@ So now you have an empty form. You probably want to add some fields to it for
 
 They differ in function, but calling them is largely the same:
 
-```
+```{Python}
 topic.add_FIELD_TYPE(label, name)
 ```
 
@@ -96,20 +96,20 @@ topic.add_FIELD_TYPE(label, name)
 
 #### The specific methods:
 
-```
+```{Python}
 topic.add_entry(label, name)
 ```
 
 This adds a one-line text box.
 
-```
+```{Python}
 topic.add_date_time(label, name)
 ```
 
 This adds a row of Spinboxes for recording the date and time. It defaults to the
     user's date/time.
 
-```
+```{Python}
 topic.add_scale(label, name, min_=0, max_=100)
 ```
 
@@ -117,7 +117,7 @@ This adds a slider for picking a numeric value within a range. You do not need
     to include the `min_` and `max_` values unless you want the range to be
     something other than 0&ndash;100.
 
-```
+```{Python}
 topic.add_numeric(label, name)
 ```
 
@@ -128,7 +128,7 @@ This adds a Spinbox for users to add a specific numeric value.
 
 After all of the fields, add one more line:
 
-```
+```{Python}
 topic.populate()
 ```
 
@@ -144,7 +144,7 @@ Find the block of lines that say `self.new_button(...)`.
 Either after this block, or somewhere in the middle (wherever you want your
     button to appear), add your own line:
 
-```
+```{Python}
 self.new_button("Button Text", self.update_topic)
 ```
 

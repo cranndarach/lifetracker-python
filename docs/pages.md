@@ -17,7 +17,7 @@ Create a file in the `py/` folder called `page_mypage.py`. Technically you do
 
 Add the following lines of code to the file:
 
-```
+```{Python}
 import tkinter as tk
 from form_general import Form
 from page import Page
@@ -42,7 +42,7 @@ Go over to `py/main.py`.
 
 First, import the module you just created. Under the "import" lines, add:
 
-```
+```{Python}
 from page_mypage import MyPage
 ```
 
@@ -51,7 +51,7 @@ Make sure you update that to reflect the file name and the class name (the
 
 Now, go to the `__init__` method, and find the chunk of code that starts with
 
-```
+```{Python}
 self.nb = ttk.Notebook(self.master)
 self.main = MainPage(self.nb)
 ...
@@ -59,13 +59,13 @@ self.main = MainPage(self.nb)
 
 Instantiate the page by adding the following line (with the usual name modifications):
 
-```
+```{Python}
 self.mypage = MyPage(self.nb)
 ```
 
 Then jump to the next chunk and add it to the notebook with:
 
-```
+```{Python}
 self.nb.add(self.mypage, text='My Page')
 ```
 
