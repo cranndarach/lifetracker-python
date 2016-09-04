@@ -1,7 +1,8 @@
 # Creating new Pages
 
-The main LifeTracker interface is held by a [tkinter]() Notebook, with separate
-    pages for different categories.
+The main LifeTracker interface is held by a
+  [tkinter](https://docs.python.org/3/library/tkinter.html) Notebook, with separate
+  pages for different categories.
 
 This tutorial will show you how to add a new page to the notebook.
 

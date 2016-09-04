@@ -3,7 +3,8 @@
 ## Overview
 
 The forms in LifeTracker are accessed via buttons organized into
-  separate tabs of a [tkinter]() notebook. Each tab has a dedicated file named for
+  separate tabs of a [tkinter](https://docs.python.org/3/library/tkinter.html)
+  notebook. Each tab has a dedicated file named for
   it, which is where the code for creating each form is housed. The main program
   then references those files in order to know what to put in the notebook.
 
