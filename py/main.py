@@ -46,6 +46,11 @@ class App:
                     break
                 except FileNotFoundError:
                     os.mkdir('usrsettings')
+        try:
+            with open('usrsettings/presets.json', 'r') as p:
+                self.presets = json.load(p)
+        except FileNotFoundError:
+            pass
 
         self.master = master
         s = ttk.Style()
@@ -91,6 +96,10 @@ class App:
         self.nb.add(self.status, text='Status')
         self.nb.add(self.influence, text='Influences')
         self.nb.grid(row=1, column=0)
+
+    def load_presets(self):
+        self.presets_page = Page()
+        # This will be updated in the future
 
     # Log a simple entry with few options.
     def new_simple(self):
