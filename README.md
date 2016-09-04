@@ -1,10 +1,18 @@
 # LifeTracker
 ### Keep track of events and trends in your life
 
+## tl;dr
+
+The very short version of how to download and use the program. Each step is elaborated below.
+
+* Clone or download the repository
+* Run `py/main.py` (Double click on the file, or from the command line in the project's root directory run `python py/main.py` (Linux/Mac), or `py\main.py` (Windows), or see below)
+* When you want to explore the data, go to "File -> Export data to CSV..." and choose a place to save it.
+
 ## Known issues
 
-* Date/time fields default to AM regardless of time
-* "Save as preset" is not yet functional (it is recommended that you do not use it as-is)
+* Date/time fields default to AM regardless of time &mdash; until this is fixed, be sure to keep an eye on the time input when adding an entry.
+* ~~"Save as preset" is not yet functional (it is recommended that you do not use it as-is)~~ *"Save as preset" has been moved to the development branch "presets." Saving is functional, but the presets do not load yet.*
 
 ## Obtaining
 
@@ -70,10 +78,12 @@ If you are unsure of what this should say, type into a terminal `which python` o
 
 ### General usage notes
 
-* If you run the program by clicking on the file (as opposed to from the command line), a terminal window will open while the program is running. This is normal. Closing it will close the program.
+* If you run the program by clicking on the file (as opposed to from the command line), a terminal window will open while the program is running. This is normal. It will log any errors or messages from the code. Closing it will close the program.
 
-* Every entry is assigned a universally unique identifier (UUID), and is saved in its own file named `data-[uuid]` in a directory called `data/`, sibling to the `py/` directory. From the "File" menu in the program, you can export all of this data to a .CSV file and save it wherever you would like. That way, you can analyze it using R, Excel, SciPy, etc. Eventually, there may be some analysis options built into the program (see issue #3), but this is not an immediate priority.
+* Your settings are saved in a file called `settings.json` in the `usrsettings/` directory, within the `py/` directory. So to be clear, that's `[LifeTracker]/py/usrsettings/settings.json`. This file will be created the first time your run the program, or any time it is not found.
 
-* There is no form validation, making every field in an entry optional. Some are specified as "optional" because they will likely only apply in very limited circumstances. Nonetheless, you can leave anything blank (with the exception of sliders, which you can leave at 0). This is to allow for optimal flexibility, so that you can worry less about the requirements and labels and just record any data you feel is relevant.
+* Every entry is assigned an identifier (UUID), and is saved in its own file named `data-[uuid].json` in a directory called `data/`, sibling to the `py/` directory. From the "File" menu in the program, you can export all of this data to a .CSV file and save it wherever you would like. That way, you can analyze it using R, Excel, SciPy, etc. Eventually, there may be some analysis options built into the program or distributed alongside it (see issue #3), but this is not an immediate priority.
 
-* Similarly, individual entries are not labeled as "event" or "mood," etc. Only "field: data" pairs are saved. You should worry more about which form has the fields that you need, than about whether it is called the right thing.
+* There is no form validation, making every field in an entry optional. Some are additionally specified as "optional" simply because they will likely only apply in very limited circumstances, but in reality you can leave anything blank (with the exception of sliders, which you can leave at 0). This is to allow for optimal flexibility, so that you can worry less about the requirements and labels and just record any data you feel is relevant.
+
+* Similarly, individual entries are not labeled as "event" or "mood," etc. Only the actual data is saved. That way, you don't have to worry about which form has the right name for what you're entering, only that you can enter the right information.

@@ -30,7 +30,7 @@ class Form:
         self.saveloc = saveloc
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
-        self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
+        # self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
         self.notes = tk.Text(self.master, width=30, height=5)
         self.tags = ttk.Entry(self.master, width=40)
         self.entries = []
@@ -151,8 +151,8 @@ class Form:
         self.tags.grid(row=self.row, column=self.col+1)
         self.count()
         self.close.grid(row=self.row, column=self.col)
-        self.preset.grid(row=self.row, column=self.col+1)
-        self.send.grid(row=self.row, column=self.col+2)
+        # self.preset.grid(row=self.row, column=self.col+1)
+        self.send.grid(row=self.row, column=self.col+1)
         self.count()
         self.entries.extend(['notes', 'tags'])
         i = 0
@@ -201,21 +201,21 @@ class Form:
             except FileNotFoundError:
                 os.mkdir('../data')
 
-    def save_preset(self):
-        p = self.organize_data()
-        try:
-            with open('usrsettings/presets.json', 'r') as f:
-                presets = load(f)
-        except FileNotFoundError:
-            try:
-                os.mkdir('usrsettings')
-            except FileExistsError:
-                pass
-            presets = [] # If I can figure out a way to name them, make this a dict
-        presets.append(p)
-        with open('usrsettings/presets.json', 'w') as f:
-            dump(presets, f)
-        messagebox.showinfo('Success', 'Your preset has been saved.')
+    # def save_preset(self):
+    #     p = self.organize_data()
+    #     try:
+    #         with open('usrsettings/presets.json', 'r') as f:
+    #             presets = load(f)
+    #     except FileNotFoundError:
+    #         try:
+    #             os.mkdir('usrsettings')
+    #         except FileExistsError:
+    #             pass
+    #         presets = [] # If I can figure out a way to name them, make this a dict
+    #     presets.append(p)
+    #     with open('usrsettings/presets.json', 'w') as f:
+    #         dump(presets, f)
+    #     messagebox.showinfo('Success', 'Your preset has been saved.')
 
     def close_window(self):
         self.master.destroy()
