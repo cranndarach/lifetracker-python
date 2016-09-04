@@ -169,3 +169,21 @@ def update_topic(self):
     topic.add_numeric('Exp. gained:', 'exp_gained')
     topic.populate()
 ```
+
+## Editing, moving, or deleting a form
+
+Once you have the creation down, the rest is easy.
+
+Labels and output names can be edited simply by changing the values (the text)
+    of the `label` and `name` arguments of the field.
+
+Fields can be reordered by moving the lines around within the method.
+
+Buttons can be reordered by moving the `new_button` lines around in the
+    `__init__` method.
+
+To delete a form, rememeber to delete (or, more typically, comment out) *both*
+    its method and its `new_button` line.
+
+To move a form to a different page, copy *both* its method and its `new_button`
+    line from one file to the other, and delete/comment out the one in the original.
