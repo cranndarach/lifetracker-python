@@ -13,7 +13,9 @@ import json
 from __init__ import saveloc
 from form_general import Form
 from page import Page
-from status import Status
+from page_status import Status
+from page_influence import Influence
+from page_main import MainPage
 
 class App:
     """The main LifeTracker application."""
@@ -30,33 +32,14 @@ class App:
             self.menu_frame: The tk.Frame where the menu is held
             self.file_button, self.edit_button: Buttons on the menu
         """
-        self.saveloc = saveloc
-        # while True:
-        #     try:
-        #         with open('usrsettings/settings.json', 'r') as s:
-        #             settings = json.load(s)
-        #         self.saveloc = settings['saveloc']
-        #         break
-        #     except FileNotFoundError:
-        #         try:
-        #             with open('usrsettings/settings.json', 'w+') as s:
-        #                 write_settings = {}
-        #                 write_settings['saveloc'] = 'data'
-        #                 ws = json.dumps(write_settings)
-        #                 s.write(ws)
-        #                 settings = json.load(s)
-        #             self.saveloc = settings['saveloc']
-        #             break
-        #         except FileNotFoundError:
-        #             os.mkdir('usrsettings')
-
         self.master = master
+        self.saveloc = saveloc
         s = ttk.Style()
         s.configure('TButton', width=25)
 
         self.nb = ttk.Notebook(self.master)
-        self.main = Page()
-        self.influence = Page()
+        self.main = MainPage(self.nb)    # Page()
+        self.influence = Influence(self.nb)   # Page()
         self.status = Status(self.nb) # Page()
 
         self.menu_frame = tk.Frame(self.master)
@@ -72,167 +55,11 @@ class App:
         self.edit_button['menu'] = self.edit_button.menu
         self.edit_button.menu.add_cascade(label="Preferences...", command=self.preferences)
 
-        self.main.new_button("Add Event", self.new_event)
-        self.main.new_button("Add Task", self.new_task)
-        self.main.new_button("Add Simple Entry", self.new_simple)
-        self.main.new_button("Add Generic", self.new_everything)
-
-
-
-        self.influence.new_button("Add External Influence", self.new_influence)
-        self.influence.new_button("Add Sleep Entry", self.new_sleep)
-        self.influence.new_button("Add Coping Mechanism", self.new_copech)
-        self.influence.new_button("Record Medicine Taken", self.meds_taken)
-
         self.nb.add(self.main, text='Main')
         self.nb.add(self.status, text='Status')
         self.nb.add(self.influence, text='Influences')
         self.nb.grid(row=1, column=0)
 
-    # Log a simple entry with few options.
-    def new_simple(self):
-        self.simple_window = tk.Toplevel()  #tk.Frame()
-        # self.simple_tab = self.nb.add(self.simple_window, text="Add Simple Entry")
-        # self.nb.add(self.simple_window, text="Add Simple Entry")
-        simple = Form(self.simple_window, self.saveloc)
-        simple.add_entry('Title:', 'title')
-        simple.add_entry('Category:', 'category')
-        simple.add_date_time('When:', 'when')
-        simple.add_entry('Location:', 'location')
-        simple.populate()
-
-    # Log an external influence, something that may impact
-    # your state or other variable of interest.
-    def new_influence(self):
-        self.infl_window = tk.Toplevel()
-        self.infl_window.title("Add External Influence")
-        infl = Form(self.infl_window, self.saveloc)
-        infl.add_entry('Title:', 'title')
-        infl.add_entry('Category:', 'category')
-        infl.add_date_time('When:', 'when')
-        infl.add_scale('Intensity:', 'intensity')
-        # infl.add_date_time('End:', 'end')
-        infl.add_entry('Location:', 'location')
-        infl.populate()
-
-    # Log an event, typically something where
-    # you were not the "do-er."
-    def new_event(self):
-        self.event_window = tk.Toplevel()
-        self.event_window.title("New Event")
-        event = Form(self.event_window, self.saveloc)
-        event.add_entry('Title:', 'title')
-        event.add_entry('Category:', 'category')
-        event.add_date_time('Start:', 'start')
-        event.add_date_time('End:', 'end')
-        event.add_entry('Location:', 'location')
-        event.add_scale('Mood at start:', 'start_valence')
-        event.add_scale('Spoons at start:', 'start_spoons')
-        event.add_scale('Mood at end:', 'end_valence')
-        event.add_scale('Spoons at end:', 'end_spoons')
-        event.populate()
-
-
-
-    # Log a task, typically where you are the "do-er."
-    def new_task(self):
-        self.task_window = tk.Toplevel()
-        self.task_window.title("New Task")
-        task = Form(self.task_window, self.saveloc)
-        task.add_entry('Title:', 'title')
-        task.add_entry('Category:', 'category')
-        task.add_date_time('Start:', 'start')
-        task.add_date_time('End:', 'end')
-        task.add_entry('Location:', 'location')
-        task.add_scale('Mood at start:', 'start_valence')
-        task.add_scale('Spoons at start:', 'start_spoons')
-        task.add_scale('Mood at end:', 'end_valence')
-        task.add_scale('Spoons at end:', 'end_spoons')
-        task.add_scale('Size of task:', 'size')
-        task.add_scale('Difficulty of task:', 'difficulty')
-        task.add_scale('Progress/completion:', 'progress')
-        task.add_scale('Satisfaction/Quality:', 'quality')
-        task.add_numeric('Exp gained:', 'exp_gained')
-        task.populate()
-
-    # Log times and quality of sleep.
-    def new_sleep(self):
-        self.sleep_window = tk.Toplevel()
-        self.sleep_window.title("New Sleep Entry")
-        sleep = Form(self.sleep_window, self.saveloc)
-        sleep.add_date_time('Went to bed:', 'sleep_start')
-        sleep.add_date_time('Woke up:', 'sleep_end')
-        sleep.add_entry('Location:', 'location')
-        sleep.add_scale('Mood when you went to bed:', 'start_valence')
-        sleep.add_scale('Mood when you woke up:', 'end_valence')
-        sleep.add_scale('Quality:', 'quality')
-        sleep.populate()
-
-
-
-    # Log a coping mechanism used.
-    def new_copech(self):
-        self.copech_window = tk.Toplevel()
-        self.copech_window.title("New Coping Mechanism")
-        copech = Form(self.copech_window, self.saveloc)
-        copech.add_entry('Coping mechanism used:', 'coping_mech')
-        copech.add_entry('Category:', 'category')
-        copech.add_entry('Reason (optional):', 'reason')
-        copech.add_date_time('When/start:', 'start')
-        copech.add_date_time('End (set to same as start if not applicable):', 'end')
-        copech.add_scale('Benefit/Improvement:', 'quality')
-        copech.add_scale('Mood afterward:', 'valence')
-        copech.add_scale('Spoons:', 'spoons')
-        copech.add_numeric('Exp gained:', 'exp_gained')
-        copech.add_entry('Location:', 'location')
-        copech.populate()
-
-
-
-    # Log medicine taken.
-    def meds_taken(self):
-        self.med_window = tk.Toplevel()
-        self.med_window.title("Log Medicine Taken")
-        med = Form(self.med_window, self.saveloc)
-        med.add_entry('Medicine name:', 'med_name')
-        med.add_entry('Category:', 'category')
-        med.add_entry('Dosage:', 'dosage')
-        med.add_entry('Reason for taking (optional):', 'reason')
-        med.add_date_time('Start of dose:', 'start')
-        med.add_date_time('End of dose (set to same as start if not applicable):', 'end')
-        med.add_scale('Benefit/Improvement (leave at 0 if NA/unknown):', 'quality')
-        med.populate()
-
-    # Log basically anything.
-    def new_everything(self):
-        self.mega_window = tk.Toplevel()
-        self.mega_window.title("New Custom Entry")
-        mega = Form(self.mega_window, self.saveloc)
-        mega.add_entry('Title:', 'title')
-        mega.add_entry('Category:', 'category')
-        mega.add_entry('Reason:', 'reason')
-        mega.add_date_time('Start:', 'start')
-        mega.add_date_time('End:', 'end')
-        mega.add_entry('Location:', 'location')
-        mega.add_entry('Trigger:', 'trigger')
-        mega.add_scale('Valence at start (higher for better mood):', 'start_valence')
-        mega.add_scale('Worry/anxiety at start:', 'start_anxiety')
-        mega.add_scale('Tension at start (emotional or physical):', 'start_tension')
-        mega.add_scale('Focus at start:', 'start_focus')
-        mega.add_scale('Intensity of mood at start:', 'start_mood_intensity')
-        mega.add_scale('Energy at start:', 'start_energy')
-        mega.add_scale('Spoons at start:', 'start_spoons')
-        mega.add_scale('Valence at end (higher for better mood):', 'end_valence')
-        mega.add_scale('Worry/anxiety at end:', 'end_anxiety')
-        mega.add_scale('Tension at end (emotional or physical):', 'end_tension')
-        mega.add_scale('Focus at end:', 'end_focus')
-        mega.add_scale('Intensity of mood at end:', 'end_mood_intensity')
-        mega.add_scale('Energy at end:', 'end_energy')
-        mega.add_scale('Spoons at end:', 'end_spoons')
-        mega.add_scale('Progress/completion:', 'progress')
-        mega.add_scale('Satisfaction/Quality/ Benefit:', 'quality')
-        mega.add_numeric('Exp gained:', 'exp_gained')
-        mega.populate()
 
     def export(self):
         """Gather data files, combine into Pandas data frame, save to .csv file.

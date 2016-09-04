@@ -118,12 +118,3 @@ class Status(Page):
         pain.add_date_time('When:', 'when')
         pain.add_entry('Your location:', 'location')
         pain.populate()
-
-    # def make_buttons(self):
-    #     self.new_button("Log Spoon Level", self.update_spoons)
-    #     self.new_button("Log Mood", self.update_mood)
-    #     self.new_button("Log Health/Symptoms", self.update_health)
-    #     self.new_button("Log Pain Level", self.update_pain)
-    #     self.new_button("Log Mobility", self.update_mobility)
-    #     self.new_button("Log Hunger", self.update_hunger)
-    #     self.new_button("Log Headache", self.add_headache)
