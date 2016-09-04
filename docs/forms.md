@@ -2,7 +2,7 @@
 
 ## Overview
 
-The forms in LifeTracker are accessed via buttons, which are organized into
+The forms in LifeTracker are accessed via buttons organized into
   separate tabs of a [tkinter]() notebook. Each tab has a dedicated file named for
   it, which is where the code for creating each form is housed. The main program
   then references those files in order to know what to put in the notebook.
@@ -15,7 +15,8 @@ This tutorial will show you how to add, edit, move and delete forms so that you
 ### 1) Open the page's file
 
 First, decide what page the new form will go in (don't worry if you're not sure;
-  you can change this later&mdash;see [Moving forms]() below).
+  you can change this later&mdash;see [Moving forms]() below). If you're planning
+  on putting it in a new page, see the [Adding Pages]() tutorial.
 
 Locate that page's file in the `py/` directory. It will probably be called
   `page_[page-name].py`.

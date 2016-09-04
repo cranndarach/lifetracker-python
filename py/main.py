@@ -37,11 +37,19 @@ class App:
         s = ttk.Style()
         s.configure('TButton', width=25)
 
+        self.add_menu()
+
         self.nb = ttk.Notebook(self.master)
         self.main = MainPage(self.nb)    # Page()
         self.influence = Influence(self.nb)   # Page()
         self.status = Status(self.nb) # Page()
 
+        self.nb.add(self.main, text='Main')
+        self.nb.add(self.status, text='Status')
+        self.nb.add(self.influence, text='Influences')
+        self.nb.grid(row=1, column=0)
+
+    def add_menu(self):
         self.menu_frame = tk.Frame(self.master)
         self.menu_frame.grid(row=0)
         self.file_button = ttk.Menubutton(self.menu_frame, text="File", underline=0)
@@ -54,12 +62,6 @@ class App:
         self.edit_button.menu = tk.Menu(self.edit_button, tearoff=0)
         self.edit_button['menu'] = self.edit_button.menu
         self.edit_button.menu.add_cascade(label="Preferences...", command=self.preferences)
-
-        self.nb.add(self.main, text='Main')
-        self.nb.add(self.status, text='Status')
-        self.nb.add(self.influence, text='Influences')
-        self.nb.grid(row=1, column=0)
-
 
     def export(self):
         """Gather data files, combine into Pandas data frame, save to .csv file.
