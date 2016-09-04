@@ -22,8 +22,10 @@ First, decide what page the new form will go in (don't worry if you're not sure;
 Locate that page's file in the `py/` directory. It will probably be called
   `page_[page-name].py`.
 
-Open the file in the text editor of your choice, such as [atom](http://atom.io),
-  gedit, TextEdit, or Notepad. (Note: Do not open it in a word processor.)
+Open the file in a text editor, such as [atom](http://atom.io) or the default
+  text editor on your system (e.g., gedit, TextEdit, Notepad). (Note: Do not open
+  it in a word processor. This will add formatting that is not compatible with
+  the script.)
 
 ### 2) Define the new form
 
@@ -184,7 +186,7 @@ Fields can be reordered by moving the lines around within the method.
 Buttons can be reordered by moving the `new_button` lines around in the
     `__init__` method.
 
-To delete a form, rememeber to delete (or, more typically, comment out) *both*
+To delete a form, remember to delete (or, more typically, comment out) *both*
     its method and its `new_button` line.
 
 To move a form to a different page, copy *both* its method and its `new_button`
