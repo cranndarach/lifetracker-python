@@ -8,6 +8,7 @@ The very short version of how to download and use the program. Each step is elab
 * Clone or download the repository
 * Run `py/main.py` (Double click on the file, or from the command line in the project's root directory run `python py/main.py` (Linux/Mac), or `py\main.py` (Windows), or see below)
 * When you want to explore the data, go to "File -> Export data to CSV..." and choose a place to save it.
+* If you want to add or edit forms, see the [wiki](https://github.com/cranndarach/lifetracker/wiki) for a tutorial.
 
 ## Known issues
 
