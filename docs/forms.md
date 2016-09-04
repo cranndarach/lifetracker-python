@@ -123,3 +123,49 @@ This adds a Spinbox for users to add a specific numeric value.
 
 
 ### 4) Finish up the form
+
+After all of the fields, add one more line:
+
+```
+topic.populate()
+```
+
+This adds the fields and buttons that are at the bottom of every form: the notes
+    box, the tags box, and the submit and close buttons.
+
+### 5) Add a button for opening this form to the notebook page
+
+Almost done! Go back up to the section called `def __init__(self, master)`.
+
+Find the block of lines that say `self.new_button(...)`.
+
+Either after this block, or somewhere in the middle (wherever you want your
+    button to appear), add your own line:
+
+```
+self.new_button("Button Text", self.update_topic)
+```
+
+The "Button Text" is self-explanatory: this is what the button will say.  
+The `self.update_topic` refers to the method you defined in step 2. This points
+    it to the code that will run when someone clicks the button.
+
+**That's all!**
+
+### An example form
+
+Here is an example of what the code for the form might look like, just to make
+    all of this concrete. (Don't forget to add the button!)
+
+```{Python}
+def update_topic(self):
+    self.topic_window = tk.Toplevel()
+    self.topic_window.title("Log Topic")
+    topic = Form(self.topic_window)
+    topic.add_entry('Title:', 'title')
+    topic.add_entry('Category:', 'category')
+    topic.add_date_time('When:','when')
+    topic.add_scale('Spoons:', 'spoons')
+    topic.add_numeric('Exp. gained:', 'exp_gained')
+    topic.populate()
+```
