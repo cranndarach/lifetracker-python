@@ -61,6 +61,7 @@ class Status(Page):
         hunger = Form(self.hunger_window)
         hunger.add_scale('Hunger:', 'hunger')
         hunger.add_date_time('When:','when')
+        hunger.add_entry('Your location:', 'location')
         hunger.populate()
 
     # Log headache, including what kind and the intensity.
@@ -72,6 +73,7 @@ class Status(Page):
         headache.add_entry('Trigger (if known):', 'trigger')
         headache.add_scale('Intensity:', 'headache_intensity')
         headache.add_date_time('When:','when')
+        headache.add_entry('Your location:', 'location')
         headache.populate()
 
     # Log status of various facets of mobility.
@@ -83,7 +85,8 @@ class Status(Page):
         mobility.add_scale('Dyspraxia (fine):', 'dyspraxia_fine')
         mobility.add_scale('Dyspraxia (gross):', 'dyspraxia_gross')
         mobility.add_scale('Weakness:', 'weakness')
-        mobilith.add_date_time('When:', 'when')
+        mobility.add_date_time('When:', 'when')
+        mobility.add_entry('Your location:', 'location')
         mobility.populate()
 
     # Log intensity of various types of pain.
