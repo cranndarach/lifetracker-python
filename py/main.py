@@ -77,11 +77,11 @@ class App:
         datafiles = glob(self.saveloc+'/data-*')
         for d in datafiles:
             with open(d, 'r') as dfile:
-                dfile_data = load(dfile)
+                dfile_data = json.load(dfile)
                 # dfile_data["tags"] = ', '.join(dfile_data["tags"])
                 data[index] = dfile_data
                 index += 1
-        datajson = dumps(data)
+        datajson = json.dumps(data)
         datapd = pd.read_json(datajson, orient='index')
         outfile = filedialog.asksaveasfilename(initialdir = '/', title = 'Save as...',
             defaultextension='.csv', filetypes = (('csv files', '*.csv'), ('all files', '*.*')))
