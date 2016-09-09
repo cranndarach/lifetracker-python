@@ -8,6 +8,7 @@ class MainPage(Page):
         self.master = master
         self.new_button("Add Event", self.new_event)
         self.new_button("Add Task", self.new_task)
+        self.new_button("Add EXP Gained", self.add_exp)
         self.new_button("Add Simple Entry", self.new_simple)
         self.new_button("Add Generic", self.new_everything)
 
@@ -48,6 +49,15 @@ class MainPage(Page):
         task.add_scale('Satisfaction/Quality:', 'quality')
         task.add_numeric('Exp gained:', 'exp_gained')
         task.populate()
+
+    # log gained EXP
+    def add_exp(self):
+        self.exp_window = tk.Toplevel()
+        self.exp_window.title("Add EXP")
+        exp = Form(self.exp_window)
+        exp.add_numeric('Exp gained:', 'exp_gained')
+        exp.add_date_time('When:', 'when')
+        exp.populate()
 
     # Log a simple entry with few options.
     def new_simple(self):
