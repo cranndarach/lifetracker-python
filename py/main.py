@@ -10,7 +10,7 @@ import pandas as pd
 # from json import load, dumps
 import json
 
-from __init__ import saveloc
+from py import get_settings
 from form_general import Form
 from page import Page
 from page_status import Status
@@ -33,7 +33,7 @@ class App:
             self.file_button, self.edit_button: Buttons on the menu
         """
         self.master = master
-        self.saveloc = saveloc
+        self.saveloc = get_settings()  #saveloc
         s = ttk.Style()
         s.configure('TButton', width=25)
 

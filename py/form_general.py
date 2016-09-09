@@ -8,7 +8,7 @@ from tkinter import messagebox
 from uuid import uuid4
 from json import dump, load
 # from prompt import Prompt
-from __init__ import saveloc
+from py import get_settings
 
 class Form:
     """An individual entry handler for LifeTracker."""
@@ -28,7 +28,7 @@ class Form:
             self.entries: A storage space for the names of all fields in the form.
         """
         self.master = master
-        self.saveloc = saveloc
+        self.saveloc = get_settings() #saveloc
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
         # self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
@@ -182,47 +182,14 @@ class Form:
         uuid = str(uuid4())
         d = {'uuid': uuid}
         data = self.organize_data(data=d)
-        # for e in self.entries:
-        #     if e == 'notes':
-        #         data[e] = self.__getattribute__(e).get('1.0', 'end')
-        #     elif e == 'tags':
-        #         tags = self.__getattribute__(e).get()
-        #         tags = tags.split(',')
-        #         tags = [t.strip() for t in tags]
-        #         data[e] = tags
-        #     else:
-        #         data[e] = self.__getattribute__(e).get()
         while True:
             try:
                 with open(self.saveloc+'/data-'+uuid+'.json', 'w') as df:
-                # with open('../data/data-'+uuid+'.json', 'w') as df:
                     dump(data, df)
                 messagebox.showinfo('Success', 'Your entry has been saved.')
                 break
             except FileNotFoundError:
-                os.mkdir('../data')
-
-    # def save_preset(self):
-    #     p = self.organize_data()
-    #     try:
-    #         with open('usrsettings/presets.json', 'r') as f:
-    #             presets = load(f)
-    #     except FileNotFoundError:
-    #         try:
-    #             os.mkdir('usrsettings')
-    #         except FileExistsError:
-    #             pass
-    #         presets = [] # If I can figure out a way to name them, make this a dict
-    #     presets.append(p)
-    #     with open('usrsettings/presets.json', 'w') as f:
-    #         dump(presets, f)
-    #     messagebox.showinfo('Success', 'Your preset has been saved.')
+                os.mkdir('data')
 
     def close_window(self):
         self.master.destroy()
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    ln = [['Name:', 'name'], ['Say:', 'say']]
-    form = Form(root, ln)
-    root.mainloop()
