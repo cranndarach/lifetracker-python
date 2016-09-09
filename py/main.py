@@ -34,8 +34,8 @@ class App:
         """
         self.master = master
         self.saveloc = get_settings()  #saveloc
-        s = ttk.Style()
-        s.configure('TButton', width=25)
+        self.s = ttk.Style()
+        self.s.configure('TButton', width=25)
 
         self.add_menu()
 
@@ -45,19 +45,20 @@ class App:
         self.status = Status(self.nb) # Page()
 
         self.nb.add(self.main, text='Main')
-        self.nb.add(self.status, text='Status')
         self.nb.add(self.influence, text='Influences')
+        self.nb.add(self.status, text='Status')
         self.nb.grid(row=1, column=0)
 
     def add_menu(self):
         self.menu_frame = tk.Frame(self.master)
-        self.menu_frame.grid(row=0)
-        self.file_button = ttk.Menubutton(self.menu_frame, text="File", underline=0)
+        self.menu_frame.grid(row=0, sticky='nw')
+        self.master.rowconfigure(0, pad=10)
+        self.file_button = tk.Menubutton(self.menu_frame, text="File", underline=0)
         self.file_button.pack(side='left')  #grid(row=0, column=0)
         self.file_button.menu = tk.Menu(self.file_button, tearoff=0)
         self.file_button['menu'] = self.file_button.menu
         self.file_button.menu.add_cascade(label="Export data to CSV...", command=self.export)
-        self.edit_button = ttk.Menubutton(self.menu_frame, text="Edit", underline=0)
+        self.edit_button = tk.Menubutton(self.menu_frame, text="Edit", underline=0)
         self.edit_button.pack(side='left')
         self.edit_button.menu = tk.Menu(self.edit_button, tearoff=0)
         self.edit_button['menu'] = self.edit_button.menu
