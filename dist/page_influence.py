@@ -33,8 +33,8 @@ class Influence(Page):
         sleep.add_date_time('Went to bed:', 'sleep_start')
         sleep.add_date_time('Woke up:', 'sleep_end')
         sleep.add_entry('Location:', 'location')
-        sleep.add_scale('Mood when you went to bed:', 'start_valence')
-        sleep.add_scale('Mood when you woke up:', 'end_valence')
+        # sleep.add_scale('Mood when you went to bed:', 'start_valence')
+        sleep.add_scale('Mood when you woke up:', 'valence')
         sleep.add_scale('Quality:', 'quality')
         sleep.populate()
 
