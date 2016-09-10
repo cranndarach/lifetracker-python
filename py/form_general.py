@@ -30,6 +30,8 @@ class Form:
         """
         self.master = master
         self.saveloc = get_settings() #saveloc
+        # self.a = ttk.Style()
+        # self.a.configure('Vertical.TScrollbar.border', bordercolor='black', borderthickness=1)
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
         # self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
@@ -39,6 +41,7 @@ class Form:
         self.boxfont = font.Font(family='Helvetica', size=10)
         self.notes = tk.Text(self.notesframe, width=35, height=5, wrap='word',
             font=self.boxfont, relief='flat', bd=1, yscrollcommand=self.scroll_notes)
+        # self.notes.bind('<KeyPress-Tab>', self.notes.tk_focusNext)
         # self.notes.pack(side='left')
         self.notes.grid(row=0, column=0)
         # self.notescroll.pack(side='left')
@@ -49,8 +52,6 @@ class Form:
         self.colmaster = 0
         self.row = 0
         self.col = 0
-        # self.s = ttk.Style()
-        # self.s.configure('TLabel', wraplength=200)
 
     def count(self):
         """Determine the placement of a widget in the grid.
