@@ -54,36 +54,21 @@ class App:
         self.nb.grid(row=1, column=0)
 
     def add_menu(self):
-        # self.menu_frame = tk.Frame(self.master)
-        # self.menu_frame.grid(row=0, sticky='nw')
         self.menubar = tk.Menu(self.master, tearoff=0)
         self.master.config(menu=self.menubar)
 
         self.filemenu = tk.Menu(self.menubar, tearoff=0)
-        # self.file_submenu = tk.Menu(self.filemenu, tearoff=0)
         self.filemenu.add_command(label="Export data to CSV...", command=self.export,
             underline=1)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="About LifeTracker", command=self.about,
+            underline=0)
         self.editmenu = tk.Menu(self.menubar, tearoff=0)
-        # self.edit_submenu = tk.Menu(self.editmenu, tearoff=0)
         self.editmenu.add_command(label="Preferences...", command=self.preferences,
             underline=0)
 
         self.menubar.add_cascade(label="File", underline=0, menu=self.filemenu)
         self.menubar.add_cascade(label="Edit", underline=0, menu=self.editmenu)
-
-
-        # self.menubar.add_command(label="File", underline=0)
-        # self.file_button = tk.Menubutton(self.menu_frame, text="File", underline=0)
-        # self.file_button.pack(side='left')  #grid(row=0, column=0)
-        # self.file_button.menu = tk.Menu(self.file_button, tearoff=0)
-        # self.file_button['menu'] = self.file_button.menu
-        # self.file_button.menu.add_cascade(label="Export data to CSV...", command=self.export)
-        # self.edit_button = tk.Menubutton(self.menu_frame, text="Edit", underline=0)
-        # self.edit_button.pack(side='left')
-        # self.edit_button.menu = tk.Menu(self.edit_button, tearoff=0)
-        # self.edit_button['menu'] = self.edit_button.menu
-        # self.edit_button.menu.add_cascade(label="Preferences...", command=self.preferences)
-        # self.file_button.config(menu=self.file_button.menu)
 
     def export(self):
         """Gather data files, combine into Pandas data frame, save to .csv file.
@@ -173,6 +158,18 @@ class App:
 
     def close_window(self):
         self.master.destroy()
+
+    def about(self):
+        with open('LICENSE', 'r') as lic:
+            mit_text = lic.read()
+        self.about_window = tk.Toplevel()
+        self.about_window.title("About LifeTracker")
+        about_box = tk.Text(self.about_window, height=50, width=60, wrap='word')
+        about_box.insert('1.0', "LifeTracker is currently in active development.\n")
+        about_box.insert('end', "Find the project's repository at https://github.com/cranndarach/lifetracker\n\n")
+        about_box.insert('end', mit_text)
+        about_box.config(state='disabled')
+        about_box.grid(row=0, padx=15, pady=15)
 
 if __name__ == "__main__":
     root = tk.Tk()
