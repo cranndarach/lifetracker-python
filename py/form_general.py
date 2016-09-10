@@ -5,6 +5,7 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import font
 from uuid import uuid4
 from json import dump, load
 # from prompt import Prompt
@@ -32,7 +33,9 @@ class Form:
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
         # self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
-        self.notes = tk.Text(self.master, width=35, height=5, wrap='word')
+
+        self.boxfont = font.Font(family='Helvetica', size=10)
+        self.notes = tk.Text(self.master, width=35, height=5, wrap='word', font=self.boxfont)
         self.tags = ttk.Entry(self.master, width=40)
         self.entries = []
         self.rowmaster = 0
