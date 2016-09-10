@@ -32,14 +32,14 @@ class Form:
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
         # self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
-        self.notes = tk.Text(self.master, width=30, height=5)
+        self.notes = tk.Text(self.master, width=35, height=5, wrap='word')
         self.tags = ttk.Entry(self.master, width=40)
         self.entries = []
         self.rowmaster = 0
         self.colmaster = 0
         self.row = 0
         self.col = 0
-        self.s = ttk.Style()
+        # self.s = ttk.Style()
         # self.s.configure('TLabel', wraplength=200)
 
     def count(self):
