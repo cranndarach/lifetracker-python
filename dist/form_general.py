@@ -5,10 +5,11 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import font
 from uuid import uuid4
 from json import dump, load
 # from prompt import Prompt
-from __init__ import saveloc
+from __init__ import get_settings
 
 class Form:
     """An individual entry handler for LifeTracker."""
@@ -28,19 +29,23 @@ class Form:
             self.entries: A storage space for the names of all fields in the form.
         """
         self.master = master
-        self.saveloc = saveloc
+        self.saveloc = get_settings()
         self.send = ttk.Button(self.master, text='Submit', command=self.submit)
         self.close = ttk.Button(self.master, text='Close', command=self.close_window)
-        # self.preset = ttk.Button(self.master, text='Save as preset', command=self.save_preset)
-        self.notes = tk.Text(self.master, width=30, height=5)
+        self.notesframe = tk.Frame(self.master)
+        self.notescroll = ttk.Scrollbar(self.notesframe, orient='vertical')
+        self.notescroll.set(0.0, 0.3)
+        self.boxfont = font.Font(family='Helvetica', size=10)
+        self.notes = tk.Text(self.notesframe, width=35, height=5, wrap='word',
+            font=self.boxfont, relief='flat', bd=1, yscrollcommand=self.scroll_notes)
+        self.notes.grid(row=0, column=0)
+        self.notescroll.grid(row=0, column=1, sticky='ns')
         self.tags = ttk.Entry(self.master, width=40)
         self.entries = []
         self.rowmaster = 0
         self.colmaster = 0
         self.row = 0
         self.col = 0
-        s = ttk.Style()
-        s.configure('TLabel', wraplength=125)
 
     def count(self):
         """Determine the placement of a widget in the grid.
@@ -51,6 +56,11 @@ class Form:
         self.row = self.rowmaster%13
         self.colmaster += 1
         self.col = int(self.colmaster/13) * 2  # this will work for the time being
+
+    def scroll_notes(self, pos1, pos2):
+        newpos1 = float(pos1) + 0.1
+        newpos2 = float(pos2) + 0.1
+        self.notescroll.set(newpos1, newpos2)
 
     def add_entry(self, label, name):
         """Add a ttk.Entry with a ttk.Label, place it appropriately in the grid,
@@ -146,7 +156,7 @@ class Form:
 
     def populate(self):
         ttk.Label(self.master, text='Notes:').grid(row=self.row, column=self.col)
-        self.notes.grid(row=self.row, column=self.col+1)
+        self.notesframe.grid(row=self.row, column=self.col+1)
         self.count()
         ttk.Label(self.master, text='Tags (separated by commas):').grid(row=self.row, column=self.col)
         self.tags.grid(row=self.row, column=self.col+1)
@@ -182,47 +192,14 @@ class Form:
         uuid = str(uuid4())
         d = {'uuid': uuid}
         data = self.organize_data(data=d)
-        # for e in self.entries:
-        #     if e == 'notes':
-        #         data[e] = self.__getattribute__(e).get('1.0', 'end')
-        #     elif e == 'tags':
-        #         tags = self.__getattribute__(e).get()
-        #         tags = tags.split(',')
-        #         tags = [t.strip() for t in tags]
-        #         data[e] = tags
-        #     else:
-        #         data[e] = self.__getattribute__(e).get()
         while True:
             try:
                 with open(self.saveloc+'/data-'+uuid+'.json', 'w') as df:
-                # with open('../data/data-'+uuid+'.json', 'w') as df:
                     dump(data, df)
                 messagebox.showinfo('Success', 'Your entry has been saved.')
                 break
             except FileNotFoundError:
                 os.mkdir('data')
 
-    # def save_preset(self):
-    #     p = self.organize_data()
-    #     try:
-    #         with open('usrsettings/presets.json', 'r') as f:
-    #             presets = load(f)
-    #     except FileNotFoundError:
-    #         try:
-    #             os.mkdir('usrsettings')
-    #         except FileExistsError:
-    #             pass
-    #         presets = [] # If I can figure out a way to name them, make this a dict
-    #     presets.append(p)
-    #     with open('usrsettings/presets.json', 'w') as f:
-    #         dump(presets, f)
-    #     messagebox.showinfo('Success', 'Your preset has been saved.')
-
     def close_window(self):
         self.master.destroy()
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    ln = [['Name:', 'name'], ['Say:', 'say']]
-    form = Form(root, ln)
-    root.mainloop()
