@@ -36,6 +36,9 @@ class App:
         self.saveloc = get_settings()  #saveloc
         self.s = ttk.Style()
         self.s.configure('TButton', width=25)
+        self.s.configure('TEntry', width=40)
+        self.s.configure('Prefs.TButton', width=10)
+        self.s.configure('Prefs.TEntry', width=40)
 
         self.add_menu()
 
@@ -105,19 +108,34 @@ class App:
         more options, as the program evolves.
         """
         self.preferences_window = tk.Toplevel()
-        self.preferences_window.title('Preferences')
+        self.preferences_window.title('Edit Preferences')
         prefs = tk.Frame(self.preferences_window)
-        enter = tk.Frame(prefs)
-        ttk.Label(prefs, text='Save data files to:').grid(row=0, column=0)
+        # enter = tk.Frame(prefs)
+        ttk.Label(prefs, text='Save data files to:').pack(side='left', padx=7)  #.grid(row=0, column=0)
         self.data_dir = tk.StringVar()
         self.data_dir.set(self.saveloc)
-        self.enter_data_dir = ttk.Entry(enter, textvariable=self.data_dir)
+        self.enter_data_dir = ttk.Entry(prefs, width=35, textvariable=self.data_dir)
         self.enter_data_dir.pack(side='left')
-        browse = ttk.Button(enter, text='Browse...', command=self.set_data_dir)
-        browse.pack(side='left')
-        enter.grid(row=0, column=1)
-        ttk.Button(prefs, text='Apply', command=self.save_prefs).grid(row=1, column=1)
-        prefs.pack()
+        # self.enter_data_dir.grid(row=0, column=0)
+        browse = ttk.Button(prefs, text='Browse...', style='Prefs.TButton', command=self.set_data_dir)
+        # browse.grid(row=0, column=1, padx=2)
+        browse.pack(side='left', padx=2)
+        # enter.grid(row=0, column=1)
+        # enter.pack(side='left')
+        buttons = tk.Frame(self.preferences_window)
+        # I just want to center each button within its column
+        cancelframe = tk.Frame(buttons)
+        applyframe = tk.Frame(buttons)
+        ttk.Button(cancelframe, text='Cancel', style='Prefs.TButton', command=self.close_window).pack(anchor='center') #.grid(row=1, column=0, anchor='center')
+        ttk.Button(applyframe, text='Apply', style='Prefs.TButton', command=self.save_prefs).pack(anchor='center') #.grid(row=1, column=1, anchor='center')
+        cancelframe.grid(row=0, column=0, padx=20)
+        applyframe.grid(row=0, column=1, padx=20)
+        topspacer = tk.Frame(self.preferences_window)
+        topspacer.pack(pady=7)
+        prefs.pack(padx=1) #.grid(row=0, column=0)
+        midspacer = tk.Frame(self.preferences_window)
+        midspacer.pack(pady=11)
+        buttons.pack(pady=6)  #.grid(row=1, column=0, sticky='ew')
 
     def set_data_dir(self):
         """Ask for user's preference on the directory where data files will be saved."""
@@ -139,6 +157,9 @@ class App:
             except FileNotFoundError:
                 os.mkdir('usrsettings')
         messagebox.showinfo('Success', 'Your preferences have been saved.')
+
+    def close_window(self):
+        self.master.destroy()
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -39,8 +39,8 @@ class Form:
         self.colmaster = 0
         self.row = 0
         self.col = 0
-        s = ttk.Style()
-        s.configure('TLabel', wraplength=125)
+        self.s = ttk.Style()
+        # self.s.configure('TLabel', wraplength=200)
 
     def count(self):
         """Determine the placement of a widget in the grid.
