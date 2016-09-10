@@ -6,16 +6,16 @@ class Influence(Page):
     def __init__(self, master):
         super(Influence, self).__init__()
         self.master = master
-        self.new_button("Add External Influence", self.new_influence)
         self.new_button("Add Sleep Entry", self.new_sleep)
         self.new_button("Add Coping Mechanism", self.new_copech)
         self.new_button("Record Medicine Taken", self.meds_taken)
+        self.new_button("Add Misc. Influence", self.new_influence)
 
     # Log an external influence, something that may impact
     # your state or other variable of interest.
     def new_influence(self):
         self.infl_window = tk.Toplevel()
-        self.infl_window.title("Add External Influence")
+        self.infl_window.title("Add Misc. Influence")
         infl = Form(self.infl_window  )  #, self.saveloc)
         infl.add_entry('Title:', 'title')
         infl.add_entry('Category:', 'category')
