@@ -11,15 +11,15 @@ Spread the love!
 
 ## [LifeTracker v0.1.0](https://github.com/cranndarach/lifetracker/releases) is current as of Sept. 10, 2016
 
-![The main page of LifeTracker](https://github.com/cranndarach/lifetracker/blob/master/screenshots/main_age.JPG)
+![The main page of LifeTracker](https://github.com/cranndarach/lifetracker/blob/master/screenshots/main_age.PNG)
 
 > [ The main page of LifeTracker. A window with three visible tabs. The active one is labeled "Main." The other two are labeled "Influences" and "Status." There are two rows of buttons. The first row's buttons are labeled "Add Event," "Add Task," and "Add EXP Gained." The second row's buttons are labeled "Add Simple Entry" and "Add Generic." ]
 
-![The "Log Mood" entry](https://github.com/cranndarach/lifetracker/blob/master/screenshots/log_mood.JPG)
+![The "Log Mood" entry](https://github.com/cranndarach/lifetracker/blob/master/screenshots/log_mood.PNG)
 
 > [ A window with a form for logging your mood. There are seven sliders, one per row, labeled: "Valence (higher for better mood)," "Worry/anxiety," "Tension (emotional or physical)," "Focus," "Intensity of mood," "Energy," and "Spoons." The next row is labeled "When" and allows the user to enter a date and time. The last three rows of the form are text entries labeled "Location," "Notes," and "Tags (separated by commas)." At the bottom are two buttons. The one on the left is labeled "Close," and the one on the right is labeled "Submit." ]
 
-![A successful submission](https://github.com/cranndarach/lifetracker/blob/master/screenshots/med_success.JPG)
+![A successful submission](https://github.com/cranndarach/lifetracker/blob/master/screenshots/med_success.PNG)
 
 > [ A set of three windows depicting a successfully submitted entry. In the back is a window labeled "Log Medicine Taken." The fields are labeled "Medicine name," "Category," "Dosage," "Reason for taking (optional)," "Start of dose," "End of dose (set to same as start if not applicable)," "Benefit/improvement" (with a mostly unobstructed slider), "Notes," and "Tags (separated by commas)." In the middle is the main window with the "Influences" tab open. The four buttons (three in the first row) read "Add Sleep Entry," "Add Coping Mechanism," "Record Medicine Taken," and "Add Misc. Influence." In the front is a dialog box labeled "Success" with the message, "Your entry has been saved," and a focused button that says "OK." ]
 
