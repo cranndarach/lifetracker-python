@@ -11,7 +11,7 @@ Spread the love!
 
 ## [LifeTracker v0.1.0](https://github.com/cranndarach/lifetracker/releases) is current as of Sept. 10, 2016
 
-![The main page of LifeTracker](https://github.com/cranndarach/lifetracker/blob/master/screenshots/main_age.PNG)
+![The main page of LifeTracker](https://github.com/cranndarach/lifetracker/blob/master/screenshots/main_page.PNG)
 
 > [ The main page of LifeTracker. A window with three visible tabs. The active one is labeled "Main." The other two are labeled "Influences" and "Status." There are two rows of buttons. The first row's buttons are labeled "Add Event," "Add Task," and "Add EXP Gained." The second row's buttons are labeled "Add Simple Entry" and "Add Generic." ]
 
