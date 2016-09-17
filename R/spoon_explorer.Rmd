@@ -1,0 +1,123 @@
+---
+title: "Spoons vs. Time"
+author: "Rachael Steiner"
+date: "August 26, 2016"
+output: html_document
+---
+
+```{r 'init'}
+require(plyr)
+require(knitr)
+source("lifetracker_functions.R")
+# Edit file path as needed
+d <- read.csv("2016-09-15.csv", stringsAsFactors = F)
+```
+
+```{r}
+day <- d[ , c("when_hour", "when_minute", "when_ampm", "spoons", "start_hour", 
+           "start_minute", "start_ampm", "start_spoons", "end_hour", "end_minute", 
+           "end_ampm", "end_spoons")]
+# Convert to 24-hour, and to proportions
+day$when_hour24 <- h24(day$when_hour, day$when_ampm)
+day$when_hprop <- hourprop(day$when_hour24, day$when_minute)
+day$start_hour24 <- h24(day$start_hour, day$start_ampm)
+day$start_hprop <- hourprop(day$start_hour24, day$start_minute)
+day$end_hour24 <- h24(day$end_hour, day$end_ampm)
+day$end_hprop <- hourprop(day$end_hour24, day$end_minute)
+
+# vectors for time, and corresponding vectors for spoons
+combo.time <- c(day$start_hprop, day$end_hprop, day$when_hprop)
+combo.spoons <- c(day$start_spoons, day$end_spoons, day$spoons)
+# Make into a data frame, and clean:
+# Remove NAs and valence=0 (or no data)
+combo <- data.frame("Time"=combo.time, "Spoons"=combo.spoons)
+combo <- combo[!is.na(combo$Time) & !is.na(combo$Spoons), ]
+combo <- combo[order(combo$Time), ]
+combo <- combo[combo$Spoons != 0, ]
+```
+
+```{r}
+# plot it
+plot(combo$Time, combo$Spoons, xlab="Time of Day", ylab="Spoons", main="Spoons with respect to time of day", col="plum3", lwd=3)
+
+# see if there's a trend
+spoons.lm <- lm(Spoons ~ Time, combo)
+abline(spoons.lm, col="navyblue", lwd=2)
+summary(spoons.lm)
+
+# what about from morning on?
+daytime <- ifelse(combo$Time < 6, combo$Time + 24, combo$Time)
+spoons.awake.lm <- lm(combo$Spoons ~ daytime)
+abline(spoons.awake.lm, col="darkgreen", lwd=2)
+summary(spoons.awake.lm)
+```
+
+Time passed since waking up? Mod by how much sleep?
+
+```{r}
+# sleepcols <- grep("sleep", names(d))
+# sleep <- d[, sleepcols]
+d$s_start_hprop <- hprop(d$sleep_start_hour, d$sleep_start_minute, d$sleep_start_ampm)
+d$s_end_hprop <- hprop(d$sleep_end_hour, d$sleep_end_minute, d$sleep_end_ampm)
+# d$s_end_hprop <- ifelse(d$s_end_hprop == 19.716667, 7.716667, d$s_end_hprop)
+d$s_duration <- ifelse(d$s_end_hprop > d$s_start_hprop, d$s_end_hprop - d$s_start_hprop, (d$s_end_hprop + 24) - d$s_start_hprop)
+```
+
+```{r}
+makedate <- function(m,d,y){
+  return(paste(m,d,y, sep="/"))
+}
+d$start_date <- makedate(d$start_month, d$start_day, d$start_year)
+d$end_date <- makedate(d$end_month, d$end_day, d$end_year)
+d$sleep_date <- makedate(d$sleep_end_month, d$sleep_end_day, d$sleep_end_year)
+d$when_date <- makedate(d$when_month, d$when_day, d$when_year)
+
+d$date <- rep(NA, dim(d)[1])
+d$date <- ifelse(d$end_date != "NA/NA/NA", d$end_date, 
+                 ifelse(d$when_date != "NA/NA/NA", d$when_date, 
+                        ifelse(d$sleep_date != "NA/NA/NA", d$sleep_date, d$date)))
+
+# Sleep duration as a factor
+sleepdate <- d[!(is.na(d$s_duration)), c("date", "s_duration")]
+d <- join(d, sleepdate, by="date")
+```
+
+```{r}
+day$date <- d$date
+day$s_duration <- d[,98] # d$s_duration wasn't working
+combo <- data.frame("Time"=combo.time, "Spoons"=combo.spoons, "Sleep"=rep(day$s_duration, 3)) #c(day$s_duration, day$s_duration, day$s_duration))
+combo <- combo[!is.na(combo$Time) & !is.na(combo$Spoons) & !is.na(combo$Sleep), ]
+combo <- combo[order(combo$Time), ]
+combo <- combo[combo$Spoons != 0, ]
+# If it's before 6 am, add 24 hrs because it's probably the day before
+combo$Time <- ifelse(combo$Time < 6, combo$Time + 24, combo$Time)
+
+spoons.lm.1 <- lm(Spoons ~ Time, combo) # Time of day
+spoons.sleep <- lm(Spoons ~ Time/Sleep, combo) # Time of day + Time wrt amount of sleep
+kable(anova(spoons.lm.1, spoons.sleep))
+delta.r2 <- summary(spoons.sleep)$r.squared - summary(spoons.lm.1)$r.squared
+
+summary(spoons.lm.1)
+summary(spoons.sleep)
+
+coefs <- summary(spoons.sleep)$coefficients[,1]
+m.sleep <- mean(combo$Sleep)
+l.sleep <- m.sleep - sd(combo$Sleep)
+h.sleep <- m.sleep + sd(combo$Sleep)
+# idk i'll do this when i've slept and it's earlier
+
+```
+
+```{r}
+wakeup <- d[!(is.na(d$s_end_hprop)), c("date", "s_end_hprop")]
+d <- join(d, wakeup, by="date")
+
+# d$since_wakeup <- 
+```
+
+
+
+
+
+
+

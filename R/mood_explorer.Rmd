@@ -1,0 +1,59 @@
+---
+title: "Mood vs. Time"
+author: "Rachael Steiner"
+date: "August 22, 2016"
+output: html_document
+---
+
+```{r 'init'}
+source("lifetracker_functions.R")
+# Edit file path as needed
+d <- read.csv("data_2016-8-26.csv", stringsAsFactors = F)
+```
+
+```{r}
+day <- d[ , c("when_hour", "when_minute", "when_ampm", "valence", "start_hour", 
+           "start_minute", "start_ampm", "start_mood", "end_hour", "end_minute", 
+           "end_ampm", "end_mood", "mood")]
+# Convert to 24-hour, and to proportions
+day$when_hour24 <- h24(day$when_hour, day$when_ampm)
+day$when_hprop <- hourprop(day$when_hour24, day$when_minute)
+day$start_hour24 <- h24(day$start_hour, day$start_ampm)
+day$start_hprop <- hourprop(day$start_hour24, day$start_minute)
+day$end_hour24 <- h24(day$end_hour, day$end_ampm)
+day$end_hprop <- hourprop(day$end_hour24, day$end_minute)
+
+# There were two "mood" points that corresponded with an endpoint; factor them in
+end.valence.adjusted <- ifelse(!is.na(day$mood), day$mood, day$end_mood)
+# vectors for time, and corresponding vectors for valence
+combo.time <- c(day$start_hprop, day$end_hprop, day$when_hprop)
+combo.valence <- c(day$start_mood, end.valence.adjusted, day$valence)
+# Make into a data frame, and clean:
+# Remove NAs and valence=0 (or no data)
+combo <- data.frame("Time"=combo.time, "Valence"=combo.valence)
+combo <- combo[!is.na(combo$Time) & !is.na(combo$Valence), ]
+combo <- combo[order(combo$Time), ]
+combo <- combo[combo$Valence != 0, ]
+```
+
+```{r}
+# plot it
+plot(combo$Time, combo$Valence, xlab="Time of Day", ylab="Mood", main="Mood with respect to time of day", col="plum3", lwd=3)
+
+# see if there's a trend
+mood.lm <- lm(Valence ~ Time, combo)
+summary(mood.lm)
+
+abline(mood.lm, col="navyblue", lwd=2)
+
+# what about from morning on?
+mood.awake.lm <- lm(Valence ~ Time, combo[combo$Time >= 6, ])
+summary(mood.awake.lm)
+
+abline(mood.awake.lm, col="darkgreen", lwd=2)
+```
+
+
+
+
+
