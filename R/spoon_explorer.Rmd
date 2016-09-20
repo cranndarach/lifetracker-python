@@ -82,12 +82,13 @@ day$date <- ifelse(day$end_date != "NA/NA/NA", day$end_date,
 # Sleep duration as a factor
 sleepdate <- day[!(is.na(day$s_duration)), c("date", "s_duration")]
 day <- join(day, sleepdate, by="date")
+names(day)[length(names(day))] <- "sleepdur"
 ```
 
 ```{r}
 # day$date <- d$date
 # day$s_duration <- d[,98] # d$s_duration wasn't working
-combo <- data.frame("Time"=combo.time, "Spoons"=combo.spoons, "Sleep"=rep(day$s_duration, 3)) #c(day$s_duration, day$s_duration, day$s_duration))
+combo <- data.frame("Time"=combo.time, "Spoons"=combo.spoons, "Sleep"=rep(day$sleepdur, 3)) #c(day$s_duration, day$s_duration, day$s_duration))
 combo <- combo[!is.na(combo$Time) & !is.na(combo$Spoons) & !is.na(combo$Sleep), ]
 combo <- combo[order(combo$Time), ]
 combo <- combo[combo$Spoons != 0, ]
@@ -113,14 +114,78 @@ delta.r2 <- summary(spoons.sleep)$r.squared - summary(spoons.lm.1)$r.squared
 ```{r}
 wakeup <- day[!(is.na(day$s_end_hprop)), c("date", "s_end_hprop")]
 day <- join(day, wakeup, by="date")
-day$when_hprop <- day$when_hprop
-day$end_hprop <- day$end_hprop
+# day$when_hprop <- day$when_hprop
+# day$end_hprop <- day$end_hprop
 
 names(day)[length(names(day))] <- "wakeup"
 day$when <- ifelse(!(is.na(day$when_hprop)), day$when_hprop,
                  ifelse(!is.na(day$end_hprop), day$end_hprop, NA))
+day$since_wakeup <- day$when - day$wakeup
 ```
 
+```{r}
+combo <- data.frame("Time"=combo.time, "Spoons"=combo.spoons, "Sleep"=rep(day$sleepdur, 3),
+                    "SinceWakeup"=rep(day$since_wakeup, 3))
+combo <- combo[!is.na(combo$Time) & !is.na(combo$Spoons) & !is.na(combo$Sleep), ]
+combo <- combo[order(combo$Time), ]
+combo <- combo[combo$Spoons != 0, ]
+combo <- combo[combo$SinceWakeup > 0, ]
+combo$Time <- ifelse(combo$Time < 6, combo$Time + 24, combo$Time)
+
+spoons.wakeup.m1 <- lm(Spoons ~ SinceWakeup, combo)
+spoons.wakeup.m2 <- update(spoons.wakeup.m1, ~ . + SinceWakeup/Sleep)
+kable(anova(spoons.wakeup.m1, spoons.wakeup.m2))
+summary(spoons.wakeup.m2)
+```
+
+```{r}
+###---------------------------------------------------------------------###
+###                 FUTURE RACHAEL, LOOK AT THIS                        ###
+### THIS IS HOW YOU GET THE COEFFICIENTS WITHOUT RISKING COPYING ERROR  ###
+###---------------------------------------------------------------------###
+names(summary(spoons.wakeup.m2)) # "coefficients" looks very promising
+summary(spoons.wakeup.m2)$"coefficients"
+# returns a nice little table-like object! 
+# btw, it's "class()", not "type()" like I always think because type makes plenty of sense:
+class(summary(spoons.wakeup.m2)$"coefficients") # matrix
+coefmat <- summary(spoons.wakeup.m2)$"coefficients"
+dimnames(coefmat) # there we go
+# can the estimates be made into one nice vector?
+ests <- coefmat[,1]
+ests # nice!!
+# they have names and everything. perfect.
+###----------------------------------------------###
+###--------------------END-----------------------###
+###----------------------------------------------###
+
+# let's apply it
+b.t <- ests["SinceWakeup"]
+# b.jp <- ests["jp.c"]
+b.int <- ests["SinceWakeup:Sleep"]
+a <- ests[1]
+
+# treat job performance as the moderator
+# points include the mean (0), and +/- 1 sd
+low.slp <- -sd(combo$Sleep)
+high.slp <- sd(combo$Sleep)
+mid.slp <- mean(combo$Sleep) # to be thorough
+
+# from now on, ws will be treated as x1; jp as x2
+# I just want to be able to see it
+# b1 <- b.ws
+# b2 <- b.jp
+# b3 <- b.int
+
+# intercept in simple slopes analysis: a + b2*x2
+low.a <- a + low.slp
+high.a <- a + high.slp
+mid.a <- a
+
+# b in simple slopes: b1 + b3x2
+low.b <- b.t + b.int*low.slp
+high.b <- b.t + b.int*high.slp
+mid.b <- b.t
+```
 
 
 
