@@ -10,7 +10,7 @@ import pandas as pd
 # from json import load, dumps
 import json
 
-from py import get_settings
+from __init__ import get_settings
 from form_general import Form
 from page import Page
 from page_status import Status
@@ -35,6 +35,7 @@ class App:
         self.master = master
         self.saveloc = get_settings()  #saveloc
         self.s = ttk.Style()
+        self.s.theme_use('default')
         self.s.configure('TButton', width=25)
         self.s.configure('TEntry', width=40)
         self.s.configure('Prefs.TButton', width=10)

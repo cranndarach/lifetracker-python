@@ -9,7 +9,7 @@ from tkinter import font
 from uuid import uuid4
 from json import dump, load
 # from prompt import Prompt
-from py import get_settings
+from __init__ import get_settings
 
 class Form:
     """An individual entry handler for LifeTracker."""
