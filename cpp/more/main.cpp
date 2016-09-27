@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 
     Lifetracker w;
 
-    w.move(480, 250);
+    w.resize(500, 250);
     w.setWindowTitle("LifeTracker");
     w.show();
 

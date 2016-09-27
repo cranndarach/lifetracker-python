@@ -1,7 +1,7 @@
 #pragma once
-#include <QWidget>
+#include <QMainWindow>
 
-class Lifetracker: public QWidget {
+class Lifetracker: public QMainWindow {
 public:
-    Lifetracker(QWidget *parent = 0);
+    Lifetracker(QMainWindow *parent = 0);
 };
