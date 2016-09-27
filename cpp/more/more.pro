@@ -8,7 +8,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += lifetracker.h
-SOURCES += lifetracker.cpp main.cpp
+HEADERS += lifetracker.h entry.h logevent.h
+SOURCES += lifetracker.cpp main.cpp entry.cpp logevent.cpp
 
 QT += widgets

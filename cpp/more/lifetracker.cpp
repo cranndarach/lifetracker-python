@@ -69,7 +69,4 @@ Lifetracker::Lifetracker(QMainWindow *parent)
 
     // Set the central frame widget as a central widget
     setCentralWidget(central);
-    // setLayout(mainGrid);
-    // setLayout(inflGrid);
-    // setLayout(statusGrid);
 }
