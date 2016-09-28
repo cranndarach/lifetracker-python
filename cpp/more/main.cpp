@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "lifetracker.h"
+#include "entry.cpp"
 
 int main(int argc, char *argv[]) {
 

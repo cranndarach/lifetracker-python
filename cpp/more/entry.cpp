@@ -1,5 +1,4 @@
 #include "entry.h"
-#include <QFormLayout>
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QWidget>
@@ -7,22 +6,22 @@
 #include <QPushButton>
 #include <iostream>
 
-Entry::Entry(QDialog *parent):
-    QDialog(parent)
+Entry::Entry(QDialog *parent)
+    : QDialog(parent)
 {
     // QFormLayout *frm = new QFormLayout(this);
 
     setLayout(this->frm);
 }
 
-template <class T>
-void Entry::addLine(std::string label, T *ent) {
-    // Make a widget of the given type
-    // T *ent = new T(this);
-    // Add to form with label
-    this->frm->addRow(label, ent);
-    /// it doesn't like the this:: but i'm going to bed
-}
+// template <class T>
+// void Entry::addLine(std::string label, T *ent) {
+//     // Make a widget of the given type
+//     // T *ent = new T(this);
+//     // Add to form with label
+//     this->frm->addRow(label, ent);
+//     /// it doesn't like the this:: but i'm going to bed
+// }
 
 void Entry::populate() {
     QTextEdit *notes = new QTextEdit(this);
