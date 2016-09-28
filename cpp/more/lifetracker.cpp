@@ -44,63 +44,64 @@ Lifetracker::Lifetracker(QMainWindow *parent)
     //                << "Log Pain Level" << "Log Mobility" << "Log hunger"
     //                << "Log Headache";
 
-    QPushButton *bEvent = addButton("Log Event", mainTab, mainGrid, this->mainPosn);
-    QPushButton *bTask = addButton("Log Task", mainTab, mainGrid, this->mainPosn);
-    QPushButton *bExp = addButton("Log EXP", mainTab, mainGrid, this->mainPosn);
-    QPushButton *bSimple = addButton("Simple Entry", mainTab, mainGrid, this->mainPosn);
-    QPushButton *bGeneric = addButton("Generic Entry", mainTab, mainGrid, this->mainPosn);
+    QPushButton *bEvent = new QPushButton("Log Event");    // addButton("Log Event", mainTab, mainGrid, this->mainPosn);
+    QPushButton *bTask = new QPushButton("Log Task");     // addButton("Log Task", mainTab, mainGrid, this->mainPosn);
+    QPushButton *bExp = new QPushButton("Log EXP Gained");      // addButton("Log EXP", mainTab, mainGrid, this->mainPosn);
+    QPushButton *bSimple = new QPushButton("Simple Entry");   // addButton("Simple Entry", mainTab, mainGrid, this->mainPosn);
+    QPushButton *bGeneric = new QPushButton("Generic Entry");  // addButton("Generic Entry", mainTab, mainGrid, this->mainPosn);
 
-    QPushButton *bSleep = addButton("Log Sleep", inflTab, inflGrid, this->inflPosn);
-    QPushButton *bCopech = addButton("Log Coping Mechanism", inflTab, inflGrid, this->inflPosn);
-    QPushButton *bMeds = addButton("Log Medicine Taken", inflTab, inflGrid, this->inflPosn);
-    QPushButton *bMiscInfl = addButton("Misc. Influence", inflTab, inflGrid, this->inflPosn);
+    QPushButton *bSleep = new QPushButton("Log Sleep");    // addButton("Log Sleep", inflTab, inflGrid, this->inflPosn);
+    QPushButton *bCopech = new QPushButton("Log Coping Mechanism");   // addButton("Log Coping Mechanism", inflTab, inflGrid, this->inflPosn);
+    QPushButton *bMeds = new QPushButton("Log Medicine Taken");     // addButton("Log Medicine Taken", inflTab, inflGrid, this->inflPosn);
+    QPushButton *bMiscInfl = new QPushButton("Misc. Influence"); // addButton("Misc. Influence", inflTab, inflGrid, this->inflPosn);
 
-    QPushButton *bSpoons = addButton("Log Spoons", statusTab, statusGrid, this->statusPosn);
-    QPushButton *bMood = addButton("Log Mood", statusTab, statusGrid, this->statusPosn);
-    QPushButton *bHealth = addButton("Log Health/Symptoms", statusTab, statusGrid, this->statusPosn);
-    QPushButton *bPain = addButton("Log Pain Level", statusTab, statusGrid, this->statusPosn);
-    QPushButton *bMobility = addButton("Log Mobility", statusTab, statusGrid, this->statusPosn);
-    QPushButton *bHunger = addButton("Log Hunger", statusTab, statusGrid, this->statusPosn);
-    QPushButton *bHeadache = addButton("Log Headache", statusTab, statusGrid, this->statusPosn);
+    QPushButton *bSpoons = new QPushButton("Log Spoons");   // addButton("Log Spoons", statusTab, statusGrid, this->statusPosn);
+    QPushButton *bMood = new QPushButton("Log Mood");     // addButton("Log Mood", statusTab, statusGrid, this->statusPosn);
+    QPushButton *bHealth = new QPushButton("Log Health/Symptoms");   // addButton("Log Health/Symptoms", statusTab, statusGrid, this->statusPosn);
+    QPushButton *bPain = new QPushButton("Log Pain Levels");     // addButton("Log Pain Level", statusTab, statusGrid, this->statusPosn);
+    QPushButton *bMobility = new QPushButton("Log Mobility"); // addButton("Log Mobility", statusTab, statusGrid, this->statusPosn);
+    QPushButton *bHunger = new QPushButton("Log Hunger");   // addButton("Log Hunger", statusTab, statusGrid, this->statusPosn);
+    QPushButton *bHeadache = new QPushButton("Log Headache"); // addButton("Log Headache", statusTab, statusGrid, this->statusPosn);
+
+    QPushButton *mainBtns[] = {bEvent, bTask, bExp, bSimple, bGeneric};
+    QPushButton *inflBtns[] = {bSleep, bCopech, bMeds, bMiscInfl};
+    QPushButton *statusBtns[] = {bSpoons, bMood, bHealth, bPain, bMobility, bHunger, bHeadache};
 
     // Add the buttons to the pages
     // (make it pretty some other time)
     // int pos = 0;
     // for (int page=0; page<3; page++){}
-    // for (int posn=0; posn<5; posn++) {
-    //     // is there a way to set the row length in advance, and
-    //     // with each "addWidget()", assume it's going in the next
-    //     // column, or moving onto the next row?
-    //     QPushButton *btn = new QPushButton(mainBtnNames[posn], mainTab);
-    //     btn->setFixedSize(157, 23);
-    //     mainGrid->addWidget(btn, posn/3, posn%3);
-    // }
-    // // posn = 0;
-    // for (int posn2=0; posn2<4; posn2++) {
-    //     QPushButton *btn = new QPushButton(inflBtnNames[posn2], inflTab);
-    //     btn->setFixedSize(157, 23);
-    //     inflGrid->addWidget(btn, posn2/3, posn2%3);
-    // }
-    // // posn = 0;
-    // for (int posn3=0; posn3<7; posn3++) {
-    //     QPushButton *btn = new QPushButton(statusBtnNames[posn3], statusTab);
-    //     btn->setFixedSize(157, 23);
-    //     statusGrid->addWidget(btn, posn3/3, posn3%3);
-    // }
+    for (int posn=0; posn<5; posn++) {
+        // QPushButton *btn = new QPushButton(mainBtnNames[posn], mainTab);
+        mainBtns[posn]->setFixedSize(157, 23);
+        mainGrid->addWidget(mainBtns[posn], posn/3, posn%3);
+    }
+    // posn = 0;
+    for (int posn2=0; posn2<4; posn2++) {
+        // QPushButton *btn = new QPushButton(inflBtnNames[posn2], inflTab);
+        inflBtns[posn2]->setFixedSize(157, 23);
+        inflGrid->addWidget(inflBtns[posn2], posn2/3, posn2%3);
+    }
+    // posn = 0;
+    for (int posn3=0; posn3<7; posn3++) {
+        // QPushButton *btn = new QPushButton(statusBtnNames[posn3], statusTab);
+        statusBtns[posn3]->setFixedSize(157, 23);
+        statusGrid->addWidget(statusBtns[posn3], posn3/3, posn3%3);
+    }
 
     // Set the central frame widget as a central widget
     setCentralWidget(central);
 }
 
-QPushButton* Lifetracker::addButton(QString label, QWidget *tab, QGridLayout *grid, int posn) {
-    QPushButton *btn = new QPushButton(label, tab);
-    btn->setFixedSize(157, 23);
-    grid->addWidget(btn, posn/3, posn%3);
-    posn++;
-    return btn;
-}
+// QPushButton* Lifetracker::addButton(QString label, QWidget *tab, QGridLayout *grid, int posn) {
+//     //QPushButton *btn = new QPushButton(label, tab);
+//     btn->setFixedSize(157, 23);
+//     grid->addWidget(btn, posn/3, posn%3);
+//     posn++;
+//     //return btn;
+// }
 
-void Lifetracker::on_bGeneric_clicked()
+void Lifetracker::on_bEvent_clicked()
 {
     LogEvent e;
     e.exec();
