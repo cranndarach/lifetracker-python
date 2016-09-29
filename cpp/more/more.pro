@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = .
+TARGET = lifetracker
 DEPENDPATH += .
 INCLUDEPATH += .
 

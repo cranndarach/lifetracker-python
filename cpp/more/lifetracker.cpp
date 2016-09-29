@@ -91,33 +91,33 @@ Lifetracker::Lifetracker(QMainWindow *parent)
 // Slots: receive a button click, create corresponding form
 void Lifetracker::on_bEvent_clicked()
 {
-    // LogEvent e;
-    e->setWindowTitle("Log Event");
-    e->exec();
+    LogEvent e;
+    e.setWindowTitle("Log Event");
+    e.exec();
 }
 void Lifetracker::on_bTask_clicked()
 {
-    // LogTask t;
-    t->setWindowTitle("Log Task");
-    t->exec();
+    LogTask t;
+    t.setWindowTitle("Log Task");
+    t.exec();
 }
 void Lifetracker::on_bExp_clicked()
 {
-    // LogExp x;
-    x->setWindowTitle("Log EXP Gained");
-    x->exec();
+    LogExp x;
+    x.setWindowTitle("Log EXP Gained");
+    x.exec();
 }
-void Lifetracker::on_bSimple_clicked()
-{
-    // LogSimple s;
-    s->setWindowTitle("Simple Entry");
-    s->exec();
-}
+// void Lifetracker::on_bSimple_clicked()
+// {
+//     LogSimple s;
+//     s.setWindowTitle("Simple Entry");
+//     s.exec();
+// }
 void Lifetracker::on_bSleep_clicked()
 {
-    // LogSleep sl;
-    sl->setWindowTitle("Log Sleep");
-    sl->exec();
+    LogSleep s;
+    s.setWindowTitle("Log Sleep");
+    s.exec();
 }
 
 Lifetracker::~Lifetracker() {}
