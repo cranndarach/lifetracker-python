@@ -6,6 +6,10 @@
 #include <QString>
 #include "lifetracker.h"
 #include "logevent.h"
+#include "logtask.h"
+#include "logexp.h"
+#include "logsimple.h"
+#include "logsleep.h"
 
 Lifetracker::Lifetracker(QMainWindow *parent)
     : QMainWindow(parent)
@@ -35,23 +39,23 @@ Lifetracker::Lifetracker(QMainWindow *parent)
 
     // Create the buttons
     QPushButton *bEvent = new QPushButton("Log Event", this);
-    QPushButton *bTask = new QPushButton("Log Task");
-    QPushButton *bExp = new QPushButton("Log EXP Gained");
-    QPushButton *bSimple = new QPushButton("Simple Entry");
-    QPushButton *bGeneric = new QPushButton("Generic Entry");
+    QPushButton *bTask = new QPushButton("Log Task", this);
+    QPushButton *bExp = new QPushButton("Log EXP Gained", this);
+    QPushButton *bSimple = new QPushButton("Simple Entry", this);
+    QPushButton *bGeneric = new QPushButton("Generic Entry", this);
 
-    QPushButton *bSleep = new QPushButton("Log Sleep");
-    QPushButton *bCopech = new QPushButton("Log Coping Mechanism");
-    QPushButton *bMeds = new QPushButton("Log Medicine Taken");
-    QPushButton *bMiscInfl = new QPushButton("Misc. Influence");
+    QPushButton *bSleep = new QPushButton("Log Sleep", this);
+    QPushButton *bCopech = new QPushButton("Log Coping Mechanism", this);
+    QPushButton *bMeds = new QPushButton("Log Medicine Taken", this);
+    QPushButton *bMiscInfl = new QPushButton("Misc. Influence", this);
 
-    QPushButton *bSpoons = new QPushButton("Log Spoons");
-    QPushButton *bMood = new QPushButton("Log Mood");
-    QPushButton *bHealth = new QPushButton("Log Health/Symptoms");
-    QPushButton *bPain = new QPushButton("Log Pain Levels");
-    QPushButton *bMobility = new QPushButton("Log Mobility");
-    QPushButton *bHunger = new QPushButton("Log Hunger");
-    QPushButton *bHeadache = new QPushButton("Log Headache");
+    QPushButton *bSpoons = new QPushButton("Log Spoons", this);
+    QPushButton *bMood = new QPushButton("Log Mood", this);
+    QPushButton *bHealth = new QPushButton("Log Health/Symptoms", this);
+    QPushButton *bPain = new QPushButton("Log Pain Levels", this);
+    QPushButton *bMobility = new QPushButton("Log Mobility", this);
+    QPushButton *bHunger = new QPushButton("Log Hunger", this);
+    QPushButton *bHeadache = new QPushButton("Log Headache", this);
 
     // Make an array of buttons for each tab
     QPushButton *mainBtns[] = {bEvent, bTask, bExp, bSimple, bGeneric};
@@ -74,6 +78,11 @@ Lifetracker::Lifetracker(QMainWindow *parent)
     }
 
     connect(bEvent, SIGNAL(released()), this, SLOT(on_bEvent_clicked()));
+    connect(bTask, SIGNAL(released()), this, SLOT(on_bTask_clicked()));
+    connect(bExp, SIGNAL(released()), this, SLOT(on_bExp_clicked()));
+    connect(bSimple, SIGNAL(released()), this, SLOT(on_bSimple_clicked()));
+
+    connect(bSleep, SIGNAL(released()), this, SLOT(on_bSleep_clicked()));
 
     // Set the central frame widget as a central widget
     setCentralWidget(central);
@@ -82,8 +91,33 @@ Lifetracker::Lifetracker(QMainWindow *parent)
 // Slots: receive a button click, create corresponding form
 void Lifetracker::on_bEvent_clicked()
 {
-    LogEvent e;
-    e.exec();
+    // LogEvent e;
+    e->setWindowTitle("Log Event");
+    e->exec();
+}
+void Lifetracker::on_bTask_clicked()
+{
+    // LogTask t;
+    t->setWindowTitle("Log Task");
+    t->exec();
+}
+void Lifetracker::on_bExp_clicked()
+{
+    // LogExp x;
+    x->setWindowTitle("Log EXP Gained");
+    x->exec();
+}
+void Lifetracker::on_bSimple_clicked()
+{
+    // LogSimple s;
+    s->setWindowTitle("Simple Entry");
+    s->exec();
+}
+void Lifetracker::on_bSleep_clicked()
+{
+    // LogSleep sl;
+    sl->setWindowTitle("Log Sleep");
+    sl->exec();
 }
 
 Lifetracker::~Lifetracker() {}
