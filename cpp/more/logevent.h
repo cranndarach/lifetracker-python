@@ -7,7 +7,7 @@ class LogEvent: public Entry {
 public:
     // explicit
     LogEvent(Entry *parent = 0);
-    // ~LogEvent(); // destructor
+    ~LogEvent(); // destructor
 };
 
 

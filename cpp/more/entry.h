@@ -11,7 +11,7 @@ class Entry: public QDialog
 public:
     // explicit
     Entry(QDialog *parent = 0);
-    // ~Entry(); // destructor
+    ~Entry(); // destructor
     // template <class T>
     // void addLine(std::string label, T *ent);
     void populate();

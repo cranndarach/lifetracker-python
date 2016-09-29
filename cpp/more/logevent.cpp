@@ -25,3 +25,5 @@ LogEvent::LogEvent(Entry *parent)
 
     populate();
 }
+
+LogEvent::~LogEvent() {}
