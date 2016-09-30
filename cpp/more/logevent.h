@@ -2,12 +2,15 @@
 #define LOGEVENT_H
 
 #include "entry.h"
+#include <QObject>
 #include <QLineEdit>
 #include <QDateTime>
 #include <QDateTimeEdit>
 #include <QSlider>
 
 class LogEvent: public Entry {
+Q_OBJECT
+
 public:
     // explicit
     LogEvent(Entry *parent = 0);

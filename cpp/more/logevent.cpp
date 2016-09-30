@@ -18,7 +18,7 @@ LogEvent::LogEvent(Entry *parent)
     this->frm->addRow("Spoons:", spoons);
 
     populate();
-    connect(this->submitBtn, SIGNAL(clicked()), this, SLOT(this->processData()));
+    connect(this->submitBtn, SIGNAL(clicked()), this, SLOT(processData()));
 }
 
 void LogEvent::processData() {
@@ -46,10 +46,12 @@ void LogEvent::processData() {
     //     {"notes", QJsonValue(this->notes->toPlainText())},
     //     {"tags", QJsonValue(this->tags->text())}
     // };
-    QString filepath = "data-" + uuid + ".json";
+    QString filepath = "./data/data-" + uuid + ".json";
     QFile dataFile(filepath);
     QJsonDocument saveData(d);
+    // dataFile.open();
     dataFile.write(saveData.toJson());
+    // dataFile.close();
 }
 
 LogEvent::~LogEvent() {}

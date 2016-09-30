@@ -80,7 +80,7 @@ Lifetracker::Lifetracker(QMainWindow *parent)
     connect(bEvent, SIGNAL(released()), this, SLOT(on_bEvent_clicked()));
     connect(bTask, SIGNAL(released()), this, SLOT(on_bTask_clicked()));
     connect(bExp, SIGNAL(released()), this, SLOT(on_bExp_clicked()));
-    connect(bSimple, SIGNAL(released()), this, SLOT(on_bSimple_clicked()));
+    // connect(bSimple, SIGNAL(released()), this, SLOT(on_bSimple_clicked()));
 
     connect(bSleep, SIGNAL(released()), this, SLOT(on_bSleep_clicked()));
 
