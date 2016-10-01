@@ -1,7 +1,13 @@
 #include "entry.h"
+#include "preferences.h"
 #include <QWidget>
 #include <QDialog>
 #include <QPushButton>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonValue>
+#include <QFile>
+#include <QMessageBox>
 #include <iostream>
 
 Entry::Entry(QDialog *parent)
@@ -18,7 +24,31 @@ void Entry::populate() {
     this->frm->addRow(closeBtn, submitBtn);
 
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(close()));
-    // connect(submitBtn, SIGNAL(clicked()), this, SLOT(processData()));
+    connect(submitBtn, SIGNAL(clicked()), this, SLOT(submit()));
+}
+void Entry::serialize() {}
+void Entry::saveData() {
+    Preferences p;
+    QString saveLoc = p.getSaveLoc();
+    QString filepath = saveLoc + "/data-" + uuid + ".json";
+    QFile dataFile(filepath);
+    if (!dataFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        std::cout << "File not open" << std::endl;
+        return;
+    }
+    QJsonDocument saveData(d);
+    dataFile.write(saveData.toJson());
+    dataFile.close();
+}
+void Entry::submit() {
+    serialize();
+    saveData();
+    QMessageBox *success = new QMessageBox(this);
+    success->setWindowTitle("Success");
+    success->setText("Your entry has been saved.");
+    success->setStandardButtons(QMessageBox::Ok);
+    success->setDefaultButton(QMessageBox::Ok);
+    success->exec();
 }
 
 Entry::~Entry() {}

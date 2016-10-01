@@ -14,11 +14,12 @@ Q_OBJECT
 public:
     // explicit
     LogEvent(Entry *parent = 0);
+    void serialize();
     // void processData();
     ~LogEvent(); // destructor
 
 public slots:
-    void processData();
+    // void processData();
 
 private:
     QLineEdit *title = new QLineEdit(this);

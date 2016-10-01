@@ -10,14 +10,14 @@ INCLUDEPATH += .
 # Input
 HEADERS += lifetracker.h entry.h logevent.h\
   logexp.h logmiscinfluence.h logsleep.h\
-  logtask.h
+  logtask.h preferences.h
   # logcopech.h loggeneric.h logheadache.h \
   # loghealth.h loghunger.h logmeds.h logsimple.h\
   # logmood.h logmobility.h logpain.h \
   # logspoons.h
 SOURCES += lifetracker.cpp main.cpp entry.cpp logevent.cpp\
   logtask.cpp logexp.cpp logmiscinfluence.cpp\
-  logsleep.cpp
+  logsleep.cpp preferences.cpp
   # logcopech.cpp loggeneric.cpp logheadache.cpp \
   # loghealth.cpp loghunger.cpp logmeds.cpp  logsimple.cpp\
   # logmood.cpp logmobility.cpp logpain.cpp \

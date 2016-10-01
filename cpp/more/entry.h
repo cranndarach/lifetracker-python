@@ -12,14 +12,19 @@
 
 class Entry: public QDialog
 {
+Q_OBJECT
+
 public:
     Entry(QDialog *parent = 0);
     ~Entry(); // destructor
+    QString uuid;
+    QJsonObject d;
     void populate();
     // void sendData();
     // virtual void processData();
     // void processData();
-    // void saveData();
+    void saveData();
+    virtual void serialize();
     // void count();
     QFormLayout *frm = new QFormLayout(this);
     QTextEdit *notes = new QTextEdit(this);
@@ -27,6 +32,9 @@ public:
     QPushButton *closeBtn = new QPushButton("Close", this);
     QPushButton *submitBtn = new QPushButton("Submit", this);
     // QJsonObject *data = new QJsonObject(this);
+
+public slots:
+    void submit();
 
 private:
 

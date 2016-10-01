@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTabWidget>
 #include <QString>
+#include <QDir>
 #include "lifetracker.h"
 #include "logevent.h"
 #include "logtask.h"
@@ -14,6 +15,8 @@
 Lifetracker::Lifetracker(QMainWindow *parent)
     : QMainWindow(parent)
 {
+    // setSaveLoc();
+
     // Make a frame for the rest of the widgets to reside in
     QWidget *central = new QWidget(this);
 
@@ -92,6 +95,7 @@ Lifetracker::Lifetracker(QMainWindow *parent)
 void Lifetracker::on_bEvent_clicked()
 {
     LogEvent e;
+    // Entry *e = &event;
     e.setWindowTitle("Log Event");
     e.exec();
 }
