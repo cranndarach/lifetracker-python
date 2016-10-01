@@ -1,4 +1,6 @@
 #include "logevent.h"
+#include <iostream>
+#include <fstream>
 #include <QUuid>
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -46,12 +48,27 @@ void LogEvent::processData() {
     //     {"notes", QJsonValue(this->notes->toPlainText())},
     //     {"tags", QJsonValue(this->tags->text())}
     // };
-    QString filepath = "./data/data-" + uuid + ".json";
-    QFile dataFile(filepath);
+    QString filepath = "data-" + uuid + ".json";
+    // std::ofstream dataFile(filepath);
+    QFile dataFile(filepath); //, QIODevice::WriteOnly);
+    // try{
+    //     if (!dataFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    //         throw "File not open";
+    // }
+    // dataFile.open(QIODevice::WriteOnly);
+    // catch(std::string e) {
+    //     cout << e;
+    //     //return -1;
+    // }
+    if (!dataFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        std::cout << "File not open" << std::endl;
+        return;
+    }
     QJsonDocument saveData(d);
     // dataFile.open();
+    // dataFile.write(saveData.toJson());
     dataFile.write(saveData.toJson());
-    // dataFile.close();
+    dataFile.close();
 }
 
 LogEvent::~LogEvent() {}
