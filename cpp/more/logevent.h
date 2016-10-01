@@ -12,14 +12,9 @@ class LogEvent: public Entry {
 Q_OBJECT
 
 public:
-    // explicit
     LogEvent(Entry *parent = 0);
     void serialize();
-    // void processData();
     ~LogEvent(); // destructor
-
-public slots:
-    // void processData();
 
 private:
     QLineEdit *title = new QLineEdit(this);
@@ -30,6 +25,5 @@ private:
     QSlider *mood = new QSlider(Qt::Horizontal, this);
     QSlider *spoons = new QSlider(Qt::Horizontal, this);
 };
-
 
 #endif // LOGEVENT_H

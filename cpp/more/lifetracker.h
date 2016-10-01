@@ -19,7 +19,4 @@ public slots:
     void on_bExp_clicked();
     //void on_bSimple_clicked();
     void on_bSleep_clicked();
-
-protected:
-    // int mainPosn, inflPosn, statusPosn = 0;
 };
